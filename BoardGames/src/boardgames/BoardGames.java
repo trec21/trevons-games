@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package boardgames;
+import boardgames.pegsolitaire.*;
 
 /**
  *
@@ -15,5 +16,7 @@ public class BoardGames {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Game g = new Game();
+        g.playGame();
     }
 }
