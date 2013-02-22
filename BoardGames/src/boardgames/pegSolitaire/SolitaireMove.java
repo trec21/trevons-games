@@ -8,13 +8,13 @@ package boardgames.pegSolitaire;
  *
  * @author Tom
  */
-public class Move
+public class SolitaireMove
 {
-    public Coordinate src;
-    public Coordinate dest;
-    public Coordinate middle;
+    public SolitaireCoordinate src;
+    public SolitaireCoordinate dest;
+    public SolitaireCoordinate middle;
 
-    public Move(Coordinate s, Coordinate d, Coordinate m)
+    public SolitaireMove(SolitaireCoordinate s, SolitaireCoordinate d, SolitaireCoordinate m)
     {
         src = s;
         dest = d;

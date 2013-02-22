@@ -3,14 +3,14 @@ package boardgames.pegSolitaire;
 
 import java.util.Scanner;
 
-public class Game {
+public class SolitaireGame {
 	
 	//public static void main(String[] args)
-    Board b;
+    SolitaireBoard b;
     
     public void initGame()
 	{
-		b = new Board();
+		b = new SolitaireBoard();
                 int state = 0;
                 //firstChoice = new Rectangle();
                 //rects = new List<List<Rectangle>>();
@@ -35,13 +35,13 @@ public class Game {
 			//x2 = scan.nextInt();
 			//y2 = scan.nextInt();
 			
-			Coordinate c1 = b.getCoordinate(x1, y1);
-			Coordinate c2 = b.getCoordinate(x2, y2);
+			SolitaireCoordinate c1 = b.getCoordinate(x1, y1);
+			SolitaireCoordinate c2 = b.getCoordinate(x2, y2);
 			
 			if(c1 != null && c2 != null)
 			{
 				//input was good, proceed to make the move if possible
-				Coordinate moveMade = b.move(c1, c2);
+				SolitaireCoordinate moveMade = b.move(c1, c2);
 				if(moveMade == null)
 				{
 					System.out.println("Bad Move: try again");
