@@ -1,4 +1,4 @@
-package boardgames.pegsolitaire;
+package boardgames.pegSolitaire;
 
 
 import java.util.Scanner;
@@ -6,25 +6,34 @@ import java.util.Scanner;
 public class Game {
 	
 	//public static void main(String[] args)
-    public void playGame()
+    Board b;
+    
+    public void initGame()
 	{
-		Board b = new Board();
+		b = new Board();
                 int state = 0;
                 //firstChoice = new Rectangle();
                 //rects = new List<List<Rectangle>>();
                 
 		b.printBoard();
-		
+        }
+    
+        public void sendMove(int x1, int y1, int x2, int y2)
+        {
 		Scanner scan = new Scanner(System.in);
 		
-		while (true) 
-		{
+		//while (true) 
+		//{
+                    //int x1;
+                    //int x2;
+                    //int y1;
+                    //int y2;
 			System.out.println("Please enter in the src coordinates");
-			int x1 = scan.nextInt();
-			int y1 = scan.nextInt();
+			//x1 = scan.nextInt();
+			//y1 = scan.nextInt();
 			System.out.println("Please enter in the dest coordinates");
-			int x2 = scan.nextInt();
-			int y2 = scan.nextInt();
+			//x2 = scan.nextInt();
+			//y2 = scan.nextInt();
 			
 			Coordinate c1 = b.getCoordinate(x1, y1);
 			Coordinate c2 = b.getCoordinate(x2, y2);
@@ -56,11 +65,12 @@ public class Game {
 			{
 				//err one or both of the coordinates given by user was bad
 				System.out.println("ERRRRRRR: bad input");
-				break;
+				//break;
+                                return;
 			}
 			
 			
-	      }
+	      //}
 	}
 
 }

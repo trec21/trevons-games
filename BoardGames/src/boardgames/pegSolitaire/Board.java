@@ -1,4 +1,4 @@
-package boardgames.pegsolitaire;
+package boardgames.pegSolitaire;
 
 import java.util.*;
 
