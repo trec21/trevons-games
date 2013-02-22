@@ -1,24 +1,24 @@
-package boardgames.pegsolitaire;
+package boardgames.pegSolitaire;
 
 import java.util.*;
 
-public class Board
+public class SolitaireBoard
     {
 
         public int BOARDSIZE = 7;
 
         //member variables
-        ArrayList< ArrayList<Coordinate> > coordinates = new ArrayList< ArrayList<Coordinate> >();
+        ArrayList< ArrayList<SolitaireCoordinate> > coordinates = new ArrayList< ArrayList<SolitaireCoordinate> >();
 
         //constructors
-        public Board()
+        public SolitaireBoard()
 	    {
             for (int i = 0; i < BOARDSIZE; i++)
             {
-                ArrayList<Coordinate> list_c = new ArrayList<Coordinate>();
+                ArrayList<SolitaireCoordinate> list_c = new ArrayList<SolitaireCoordinate>();
                 for (int j = 0; j < BOARDSIZE; j++)
                 {
-                    Coordinate c = new Coordinate();
+                    SolitaireCoordinate c = new SolitaireCoordinate();
                     list_c.add(c);
                 }
                 coordinates.add(list_c);
@@ -41,7 +41,7 @@ public class Board
 					    f = false;
 				    }
 				
-				    Coordinate c = new Coordinate(x,y,f,o);
+				    SolitaireCoordinate c = new SolitaireCoordinate(x,y,f,o);
 				    coordinates.get(i).set(j,c);
 				
 				    x++;
@@ -50,14 +50,14 @@ public class Board
 			    x=-3;
 		    }
 	    }
-        public Board(Board b)
+        public SolitaireBoard(SolitaireBoard b)
 	    {
             for (int i = 0; i < BOARDSIZE; i++)
             {
-                ArrayList<Coordinate> list_c = new ArrayList<Coordinate>();
+                ArrayList<SolitaireCoordinate> list_c = new ArrayList<SolitaireCoordinate>();
                 for (int j = 0; j < BOARDSIZE; j++)
                 {
-                    Coordinate c = new Coordinate();
+                    SolitaireCoordinate c = new SolitaireCoordinate();
                     list_c.add(c);
                 }
                 coordinates.add(list_c);
@@ -75,7 +75,7 @@ public class Board
         //end constructors
 
         //member functions
-        private boolean is_on_board(Coordinate c)
+        private boolean is_on_board(SolitaireCoordinate c)
         {
             if((c.x < -1 || c.x > 1) && (c.y < 2 || c.y > -2))
                 return true;
@@ -121,7 +121,7 @@ public class Board
             return moves;
         }*/
 
-        public Coordinate getCoordinate(int x, int y)
+        public SolitaireCoordinate getCoordinate(int x, int y)
         {
             for (int i = 0; i < BOARDSIZE; i++)
             {
@@ -137,9 +137,9 @@ public class Board
         }
 
         //makes a move and returns true if it was successful
-        public Coordinate move(Coordinate src, Coordinate dest)
+        public SolitaireCoordinate move(SolitaireCoordinate src, SolitaireCoordinate dest)
         {
-            Coordinate middlePeg = src.canJump(this, dest);
+            SolitaireCoordinate middlePeg = src.canJump(this, dest);
 
             if (middlePeg != null)
             {
@@ -152,11 +152,11 @@ public class Board
             return null;
         }
 
-        public Coordinate make_move(Move move)
+        public SolitaireCoordinate make_move(SolitaireMove move)
         {
-            Coordinate srcPeg = this.getCoordinate(move.src.x, move.src.y);
-            Coordinate destPeg = this.getCoordinate(move.dest.x, move.dest.y);
-            Coordinate middlePeg = srcPeg.canJump(this, destPeg);
+            SolitaireCoordinate srcPeg = this.getCoordinate(move.src.x, move.src.y);
+            SolitaireCoordinate destPeg = this.getCoordinate(move.dest.x, move.dest.y);
+            SolitaireCoordinate middlePeg = srcPeg.canJump(this, destPeg);
 
             if (middlePeg != null)
             {
@@ -169,7 +169,7 @@ public class Board
             return null;
         }
 
-        public void un_make_move(Move move)
+        public void un_make_move(SolitaireMove move)
         {
             /*Coordinate srcPeg = this.getCoordinate(move.src.x, move.src.y);
             Coordinate destPeg = this.getCoordinate(move.dest.x, move.dest.y);
@@ -185,17 +185,17 @@ public class Board
             }
             return null;*/
 
-            Coordinate srcPeg = this.getCoordinate(move.src.x, move.src.y);
-            Coordinate destPeg = this.getCoordinate(move.dest.x, move.dest.y);
-            Coordinate middlePeg = this.getCoordinate(move.middle.x, move.middle.y);
+            SolitaireCoordinate srcPeg = this.getCoordinate(move.src.x, move.src.y);
+            SolitaireCoordinate destPeg = this.getCoordinate(move.dest.x, move.dest.y);
+            SolitaireCoordinate middlePeg = this.getCoordinate(move.middle.x, move.middle.y);
             middlePeg.filled = true;
             srcPeg.filled = true;
             destPeg.filled = false;
         }
 
-        public ArrayList<Move> get_all_possible_moves()
+        public ArrayList<SolitaireMove> get_all_possible_moves()
         {
-            ArrayList<Move> moves = new ArrayList<Move>();
+            ArrayList<SolitaireMove> moves = new ArrayList<SolitaireMove>();
 
             //ArrayList<Board> moves = new ArrayList<Board>();
             for (int i = 0; i < BOARDSIZE; i++)
@@ -204,7 +204,7 @@ public class Board
                 {
                     if (coordinates.get(i).get(j).onBoard && !coordinates.get(i).get(j).filled) //***********remove the '!' if using getJumpsSrc()
                     {
-                        ArrayList<Move> jumps = coordinates.get(i).get(j).getJumpsDest(this); //returns a list of all moves for 'this' as src
+                        ArrayList<SolitaireMove> jumps = coordinates.get(i).get(j).getJumpsDest(this); //returns a list of all moves for 'this' as src
                         moves.addAll(jumps);
                     }
                 }

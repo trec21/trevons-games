@@ -1,8 +1,8 @@
-package boardgames.pegsolitaire;
+package boardgames.pegSolitaire;
 
 import java.util.*;
 
-public class Coordinate {
+public class SolitaireCoordinate {
 	
 	int x;
 	int y;
@@ -10,7 +10,7 @@ public class Coordinate {
 	boolean filled;
 	boolean onBoard;
 	
-	Coordinate()
+	SolitaireCoordinate()
         {
             x = 0;
             y = 0;
@@ -18,7 +18,7 @@ public class Coordinate {
             onBoard = true;
         }
 
-        Coordinate(Coordinate c)
+        SolitaireCoordinate(SolitaireCoordinate c)
         {
             x = (c.x);
             y = (c.y);
@@ -26,7 +26,7 @@ public class Coordinate {
             onBoard = c.onBoard;
         }
 
-        Coordinate(int a, int b, boolean f, boolean o)
+        SolitaireCoordinate(int a, int b, boolean f, boolean o)
         {
             x = a;
             y = b;
@@ -34,9 +34,9 @@ public class Coordinate {
             onBoard = o;
         }
 
-        ArrayList<Coordinate> getTwoSpacesAway(Board b)
+        ArrayList<SolitaireCoordinate> getTwoSpacesAway(SolitaireBoard b)
 	    {
-		    ArrayList<Coordinate> dests = new ArrayList<Coordinate>();
+		    ArrayList<SolitaireCoordinate> dests = new ArrayList<SolitaireCoordinate>();
 		    if(y-2>=-3)
 		    {
 			    dests.add(b.getCoordinate(x,y-2));
@@ -72,20 +72,20 @@ public class Coordinate {
 		    return dests;
 	    }
 
-         ArrayList<Move> getJumpsSrc(Board b)
+         ArrayList<SolitaireMove> getJumpsSrc(SolitaireBoard b)
 	    {
-            ArrayList<Move> jumps = new ArrayList<Move>();
+            ArrayList<SolitaireMove> jumps = new ArrayList<SolitaireMove>();
 		    
 		    //get all positions that could be destinations
 
 
-            ArrayList<Coordinate> dests = getTwoSpacesAway(b);
+            ArrayList<SolitaireCoordinate> dests = getTwoSpacesAway(b);
 		    for(int i = 0; i<dests.size(); i++)
 		    {
-			    Coordinate middle = canJump(b, dests.get(i));
+			    SolitaireCoordinate middle = canJump(b, dests.get(i));
 			    if(middle != null)
 			    {
-                    Move m = new Move(this, dests.get(i), middle);
+                    SolitaireMove m = new SolitaireMove(this, dests.get(i), middle);
                     jumps.add(m);
 				    //jumps.Add(dests[i]);
 			    }
@@ -95,17 +95,17 @@ public class Coordinate {
 		    return jumps;
 	    }
 
-         ArrayList<Move> getJumpsDest(Board b)
+         ArrayList<SolitaireMove> getJumpsDest(SolitaireBoard b)
         {
-            ArrayList<Move> jumps = new ArrayList<Move>();
+            ArrayList<SolitaireMove> jumps = new ArrayList<SolitaireMove>();
 
-            ArrayList<Coordinate> srcs = getTwoSpacesAway(b);
+            ArrayList<SolitaireCoordinate> srcs = getTwoSpacesAway(b);
             for (int i = 0; i < srcs.size(); i++)
             {
-                Coordinate middle = srcs.get(i).canJump(b, this);
+                SolitaireCoordinate middle = srcs.get(i).canJump(b, this);
                 if (middle != null)
                 {
-                    Move m = new Move(srcs.get(i), this, middle);
+                    SolitaireMove m = new SolitaireMove(srcs.get(i), this, middle);
                     jumps.add(m);
                     //jumps.Add(dests[i]);
                 }
@@ -133,7 +133,7 @@ public class Coordinate {
 	    }
 	
 	    //finds out the direction of the jump
-         int getJumpType(Coordinate dest)
+         int getJumpType(SolitaireCoordinate dest)
 	    {
 		    //right
 		    if(this.x+2==dest.x && dest.y == this.y)
@@ -183,9 +183,9 @@ public class Coordinate {
 	    }
 	
 	    //checks if the src(this) can jump to the dest
-         Coordinate canJump(Board b, Coordinate dest) //returns the middle piece (that has a peg in it) if the requested move is possible; if not returns null
+         SolitaireCoordinate canJump(SolitaireBoard b, SolitaireCoordinate dest) //returns the middle piece (that has a peg in it) if the requested move is possible; if not returns null
 	    {
-		    Coordinate middlePeg = new Coordinate();
+		    SolitaireCoordinate middlePeg = new SolitaireCoordinate();
 		
 		    int jumpType = this.getJumpType(dest);
 		
