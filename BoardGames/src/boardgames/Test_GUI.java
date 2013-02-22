@@ -3,9 +3,12 @@
  * and open the template in the editor.
  */
 package boardgames;
-import boardgames.pegsolitaire.*;
+import boardgames.pegSolitaire.*;
 import boardgames.Gomoku.*;
 import boardgames.BattleShip.*;
+
+import java.awt.*;
+import javax.swing.*;
 /**
  *
  * @author Tom
@@ -15,8 +18,15 @@ public class Test_GUI extends javax.swing.JPanel {
     /**
      * Creates new form Test_GUI
      */
+    
+    SolitaireGuiPanel pegGui;
+    JFrame gameFrame;
+    
     public Test_GUI() {
         initComponents();
+        
+        pegGui = new SolitaireGuiPanel();
+        gameFrame = new JFrame("GUI2");
     }
 
     /**
@@ -115,8 +125,33 @@ public class Test_GUI extends javax.swing.JPanel {
 
     private void solitaireClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solitaireClicked
         // TODO add your handling code here:
-        Game g = new Game();
-        g.playGame();
+        
+        /*SolitaireGui gui = new SolitaireGui();
+        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        JLabel textLabel= new JLabel("Label56",SwingConstants.CENTER);
+        textLabel.setPreferredSize(new Dimension(300,100));
+        gui.getContentPane().add(textLabel,BorderLayout.CENTER);
+
+        gui.setLocationRelativeTo(null);
+        gui.pack();
+        gui.setVisible(true);
+        */
+        
+        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        JLabel textLabel= new JLabel("Label56",SwingConstants.CENTER);
+        textLabel.setPreferredSize(new Dimension(300,100));
+        gameFrame.getContentPane().add(textLabel,BorderLayout.CENTER);
+        
+        gameFrame.add((pegGui));
+        
+        gameFrame.setLocationRelativeTo(null);
+        gameFrame.pack();
+        gameFrame.setVisible(true);
+        
+        SolitaireGame g = new SolitaireGame();
+        g.initGame();
         
     }//GEN-LAST:event_solitaireClicked
 

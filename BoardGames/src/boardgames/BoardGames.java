@@ -5,7 +5,7 @@
 package boardgames;
 import java.awt.*;
 import javax.swing.*;
-import boardgames.pegsolitaire.*;
+import boardgames.pegSolitaire.*;
 
 /**
  *
@@ -39,7 +39,5 @@ public class BoardGames {
         frame.pack();
         frame.setVisible(true);
       
-        //Game g = new Game();
-        //g.playGame();
     }
 }
