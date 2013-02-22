@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 package boardgames;
+import java.awt.*;
+import javax.swing.*;
 import boardgames.pegsolitaire.*;
 
 /**
@@ -16,7 +18,28 @@ public class BoardGames {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Game g = new Game();
-        g.playGame();
+        /*java.awt.EventQueue.invokeLater(new Runnable() 
+        {
+            public void run() {
+                new Test_GUI().setVisible(true);
+            }
+        });*/
+        Test_GUI gui = new Test_GUI();
+        
+        JFrame frame = new JFrame("GUI");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        JLabel textLabel= new JLabel("Label",SwingConstants.CENTER);
+        textLabel.setPreferredSize(new Dimension(300,100));
+        frame.getContentPane().add(textLabel,BorderLayout.CENTER);
+        
+        frame.add((gui));
+        
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
+      
+        //Game g = new Game();
+        //g.playGame();
     }
 }
