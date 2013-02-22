@@ -5,7 +5,7 @@
 package boardgames;
 import java.awt.*;
 import javax.swing.*;
-import boardgames.pegsolitaire.*;
+import boardgames.pegSolitaire.*;
 
 /**
  *
