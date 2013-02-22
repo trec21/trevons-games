@@ -150,8 +150,8 @@ public class Test_GUI extends javax.swing.JPanel {
         gameFrame.pack();
         gameFrame.setVisible(true);
         
-        //Game g = new Game();
-        //g.playGame();
+        Game g = new Game();
+        g.initGame();
         
     }//GEN-LAST:event_solitaireClicked
 
