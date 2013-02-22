@@ -39,7 +39,5 @@ public class BoardGames {
         frame.pack();
         frame.setVisible(true);
       
-        //Game g = new Game();
-        //g.playGame();
     }
 }
