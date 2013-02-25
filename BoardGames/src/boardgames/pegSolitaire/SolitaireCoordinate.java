@@ -107,8 +107,8 @@ public class SolitaireCoordinate {
                 {
                     SolitaireMove m = new SolitaireMove(srcs.get(i), this, middle);
                     jumps.add(m);
-                    System.out.println("jumpFound: "+srcs.get(i).x+srcs.get(i).y+" to " +this.x+this.y);
-                    return jumps;
+                    //System.out.println("jumpFound: "+srcs.get(i).x+srcs.get(i).y+" to " +this.x+this.y);
+                    //return jumps;
                 }
                 //System.out.println("hereish " + i);
             }
