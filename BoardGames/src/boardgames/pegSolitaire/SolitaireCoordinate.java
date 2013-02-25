@@ -36,45 +36,45 @@ public class SolitaireCoordinate {
 
         ArrayList<SolitaireCoordinate> getTwoSpacesAway(SolitaireBoard b)
 	    {
-		    ArrayList<SolitaireCoordinate> dests = new ArrayList<SolitaireCoordinate>();
-		    if(y-2>=-3)
-		    {
-			    dests.add(b.getCoordinate(x,y-2));
-		    }
-		    if(y+2<=3)
-		    {
-                dests.add(b.getCoordinate(x, y + 2));
-		    }
-		    if(x-2>=-3)
-		    {
-                dests.add(b.getCoordinate(x - 2, y));
-		    }
-		    if(x+2<=3)
-		    {
-                dests.add(b.getCoordinate(x + 2, y));
-		    }
-		    if(y-2>=-3 && x+2<=3)
-		    {
-                dests.add(b.getCoordinate(x + 2, y - 2));
-		    }
-		    if(y-2>=-3 && x-2>=-3)
-		    {
-                dests.add(b.getCoordinate(x - 2, y - 2));
-		    }
-		    if(y+2<=3 && x+2<=3)
-		    {
-                dests.add(b.getCoordinate(x + 2, y + 2));
-		    }
-		    if(y+2<=3 && x-2>=-3)
-		    {
-                dests.add(b.getCoordinate(x - 2, y + 2));
-		    }
-		    return dests;
+                ArrayList<SolitaireCoordinate> dests = new ArrayList<>();
+                if(y-2>=-3)//down
+                {
+                    dests.add(b.getCoordinate(x,y-2));
+                }
+                if(y+2<=3)//up
+                {
+                    dests.add(b.getCoordinate(x, y + 2));
+                }
+                if(x-2>=-3)//left
+                {
+                    dests.add(b.getCoordinate(x - 2, y));
+                }
+                if(x+2<=3)//right
+                {
+                    dests.add(b.getCoordinate(x + 2, y));
+                }
+                if(y-2>=-3 && x+2<=3)//down right
+                {
+                    dests.add(b.getCoordinate(x + 2, y - 2));
+                }
+                if(y-2>=-3 && x-2>=-3)//dwn left
+                {
+                    dests.add(b.getCoordinate(x - 2, y - 2));
+                }
+                if(y+2<=3 && x+2<=3)//up right
+                {
+                    dests.add(b.getCoordinate(x + 2, y + 2));
+                }
+                if(y+2<=3 && x-2>=-3)//up left
+                {
+                     dests.add(b.getCoordinate(x - 2, y + 2));
+                }
+                return dests;
 	    }
 
          ArrayList<SolitaireMove> getJumpsSrc(SolitaireBoard b)
 	    {
-            ArrayList<SolitaireMove> jumps = new ArrayList<SolitaireMove>();
+            ArrayList<SolitaireMove> jumps = new ArrayList<>();
 		    
 		    //get all positions that could be destinations
 
@@ -97,7 +97,7 @@ public class SolitaireCoordinate {
 
          ArrayList<SolitaireMove> getJumpsDest(SolitaireBoard b)
         {
-            ArrayList<SolitaireMove> jumps = new ArrayList<SolitaireMove>();
+            ArrayList<SolitaireMove> jumps = new ArrayList<>();
 
             ArrayList<SolitaireCoordinate> srcs = getTwoSpacesAway(b);
             for (int i = 0; i < srcs.size(); i++)
@@ -107,7 +107,8 @@ public class SolitaireCoordinate {
                 {
                     SolitaireMove m = new SolitaireMove(srcs.get(i), this, middle);
                     jumps.add(m);
-                    //jumps.Add(dests[i]);
+                    //System.out.println("jumpFound: "+srcs.get(i).x+srcs.get(i).y+" to " +this.x+this.y);
+                    //return jumps;
                 }
                 //System.out.println("hereish " + i);
             }
@@ -183,78 +184,82 @@ public class SolitaireCoordinate {
 	    }
 	
 	    //checks if the src(this) can jump to the dest
-         SolitaireCoordinate canJump(SolitaireBoard b, SolitaireCoordinate dest) //returns the middle piece (that has a peg in it) if the requested move is possible; if not returns null
-	    {
-		    SolitaireCoordinate middlePeg = new SolitaireCoordinate();
-		
-		    int jumpType = this.getJumpType(dest);
-		
-		    //vertical (x's are the same)
-		    if(jumpType == 2 || jumpType == 3)
-		    {
-			    int dif = max(this.y,dest.y)-1;
-			    middlePeg = b.getCoordinate(this.x,dif);
-			    if(middlePeg.filled && this.filled && dest.filled == false)
-			    {
-				    //System.out.println(middlePeg.x + " " + middlePeg.y);
-				    return middlePeg;
-			    }
-			    else
-			    {
-				    return null;
-			    }
-		    }
-		
-		    //horizontal (y's are the same)
-		    else if(jumpType == 0 || jumpType == 1)
-		    {
-			    int dif = max(this.x,dest.x)-1;
-			    middlePeg = b.getCoordinate(dif,this.y);
-			    if(middlePeg.filled && this.filled && dest.filled == false)
-			    {
-				    //System.out.println(middlePeg.x + " " + middlePeg.y);
-				    return middlePeg;
-			    }
-			    else
-			    {
-				    return null;
-			    }
-		    }
-		    //upright/downleft
-		    else if(jumpType == 4 || jumpType == 7)
-		    {
-			    int difx = max(this.x,dest.x)-1;
-			    int dify = max(this.y,dest.y)-1;
-			    middlePeg = b.getCoordinate(difx,dify);
-			    if(middlePeg.filled && this.filled && dest.filled == false)
-			    {
-				    return middlePeg;
-			    }
-			    else
-			    {
-				    return null;
-			    }
-		    }
-		
-		    //upleft/downright
-		    else if(jumpType == 5 || jumpType == 6)
-		    {
-			    int difx = max(this.x,dest.x)-1;
-			    int dify = max(this.y,dest.y)-1;
-			    middlePeg = b.getCoordinate(difx,dify);
-			    if(middlePeg.filled && this.filled && dest.filled == false)
-			    {
-				    return middlePeg;
-			    }
-			    else
-			    {
-				    return null;
-			    }
-		    }
-		
-		    return null;
+        SolitaireCoordinate canJump(SolitaireBoard b, SolitaireCoordinate dest) //returns the middle piece (that has a peg in it) if the requested move is possible; if not returns null
+        {
+            if(dest.onBoard && this.onBoard)
+            {
+                SolitaireCoordinate middlePeg;
+
+                int jumpType = this.getJumpType(dest);
+
+                //vertical (x's are the same)
+                if(jumpType == 2 || jumpType == 3)
+                {
+                    int dif = max(this.y,dest.y)-1;
+                    middlePeg = b.getCoordinate(this.x,dif);
+                    if(middlePeg.filled && middlePeg.onBoard && this.filled && dest.filled == false)
+                    {
+                            //System.out.println(middlePeg.x + " " + middlePeg.y);
+                        return middlePeg;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                //horizontal (y's are the same)
+                else if(jumpType == 0 || jumpType == 1)
+                {
+                    int dif = max(this.x,dest.x)-1;
+                    middlePeg = b.getCoordinate(dif,this.y);
+                    if(middlePeg.filled && middlePeg.onBoard && this.filled && dest.filled == false)
+                    {
+                            //System.out.println(middlePeg.x + " " + middlePeg.y);
+                        return middlePeg;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                //upright/downleft
+                else if(jumpType == 4 || jumpType == 7)
+                {
+                    int difx = max(this.x,dest.x)-1;
+                    int dify = max(this.y,dest.y)-1;
+                    middlePeg = b.getCoordinate(difx,dify);
+                    if(middlePeg.filled && middlePeg.onBoard && this.filled && dest.filled == false)
+                    {
+                        return middlePeg;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                //upleft/downright
+                else if(jumpType == 5 || jumpType == 6)
+                {
+                    int difx = max(this.x,dest.x)-1;
+                    int dify = max(this.y,dest.y)-1;
+                    middlePeg = b.getCoordinate(difx,dify);
+                    if(middlePeg.filled && middlePeg.onBoard && this.filled && dest.filled == false)
+                    {
+                        return middlePeg;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                return null;
 	    }
-	
+            
+            return null;
+        }
 	
 	 public String toString()
 	{

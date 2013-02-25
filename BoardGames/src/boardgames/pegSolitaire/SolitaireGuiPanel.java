@@ -21,6 +21,7 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
     int BOARDSIZE;
     SolitaireBoard b;
     int state;
+    boolean game_is_over;
     //int count = 0;
     JButton firstChoice;
     JButton middleButton;
@@ -45,6 +46,7 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
         
         b = new SolitaireBoard();
         state = 0;
+        game_is_over = false;
         firstChoice = new JButton();
         middleButton = new JButton();
         buts = new ArrayList<>();
@@ -174,6 +176,7 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
         jButton31 = new javax.swing.JButton();
         jButton32 = new javax.swing.JButton();
         jButton33 = new javax.swing.JButton();
+        jButton34 = new javax.swing.JButton();
 
         jButton1.setBackground(new java.awt.Color(0, 0, 255));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -406,6 +409,13 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton34.setText("Hint");
+        jButton34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hint_clicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -429,26 +439,27 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
                                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(4, 4, 4)
-                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(85, Short.MAX_VALUE))))
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(85, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -501,24 +512,28 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jButton11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -556,66 +571,142 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
 
     private void jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActionPerformed
         // TODO add your handling code here:
-
-        JButton clicked = (JButton)evt.getSource();
-        
-        if (state == 0)
+        if(!game_is_over)
         {
-            x1 = getX(clicked);
-            y1 = getY(clicked);
-            SolitaireCoordinate c = b.getCoordinate(x1, y1);
-            if(c.filled)
+            JButton clicked = (JButton)evt.getSource();
+
+            if (state == 0)
             {
-                state = 1;
-                (clicked).setBackground(Color.GREEN);  //set selected to green
-                firstChoice = clicked;
+                x1 = getX(clicked);
+                y1 = getY(clicked);
+                SolitaireCoordinate c = b.getCoordinate(x1, y1);
+                if(c.filled)
+                {
+                    state = 1;
+                    (clicked).setBackground(Color.GREEN);  //set selected to green
+                    firstChoice = clicked;
+                }
+                else
+                {
+                    System.out.println("Invalid Source: no peg at "+x1+", "+y1);
+                }
             }
             else
             {
-                System.out.println("Invalid Source: no peg at "+x1+", "+y1);
+                if (clicked.equals(firstChoice))
+                {
+                    clicked.setBackground(Color.BLUE);  //set selected to darkblue
+                    state = 0;
+                }
+                else
+                {
+                    state = 0;
+                    x2 = getX(clicked);
+                    y2 = getY(clicked);
+                        //System.out.println("x1"+x1+" y1"+y1+" x2"+x2+" y2"+y2);
+                    SolitaireCoordinate c1 = b.getCoordinate(x1, y1);
+                    SolitaireCoordinate c2 = b.getCoordinate(x2, y2);
+                    if (c1 != null && c2 != null)
+                    {
+                        //input was good, proceed to make the move if possible
+                        SolitaireCoordinate moveMade = b.move(c1, c2);
+
+                        if (moveMade == null)
+                        {
+                            //print error text that move was bad (bad input)
+                            System.out.println("Invalid Jump Attempted");
+                            firstChoice.setBackground(Color.BLUE);
+                        }
+                        else
+                        {
+                            middleButton = buts.get((-moveMade.y)+3).get((moveMade.x)+3);
+                            apply_move_to_graphics(clicked);
+                        }
+                    }
+                }
+            }
+        
+            if(game_over())
+            {
+                game_is_over = true;
             }
         }
         else
         {
-            if (clicked.equals(firstChoice))
+            System.out.println("Game is over");
+        }
+    }//GEN-LAST:event_jButtonActionPerformed
+
+    private void hint_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hint_clicked
+        // TODO add your handling code here:
+        final ArrayList<SolitaireMove> moves = b.get_all_possible_moves();
+        
+        for(int i = 0; i<moves.size(); i++)
+        {
+            //JButton middleButton = buts.get((-moves.get(i).middle.y)+3).get((moves.get(i).middle.x)+3);
+            JButton src = buts.get((-moves.get(i).src.y)+3).get((moves.get(i).src.x)+3);
+            //JButton dest = buts.get((-moves.get(i).dest.y)+3).get((moves.get(i).dest.x)+3);
+            
+            src.setBackground(Color.red);
+            //need a way to go through and reset these to blue afterward
+        }
+        
+        //try to make it so theres a timer here to make them blink red 3 times and then go back go blue
+         java.util.Timer timer = new java.util.Timer("blink buttons");
+ 
+        //2- Taking an instance of class contains your repeated method.
+         
+       class MyTask extends TimerTask
+       {
+        private int times = 0;
+        public void run() {
+            times++;
+            if (times <= 5) 
             {
-                clicked.setBackground(Color.BLUE);  //set selected to darkblue
-                state = 0;
-            }
-            else
-            {
-                state = 0;
-                x2 = getX(clicked);
-                y2 = getY(clicked);
-                    //System.out.println("x1"+x1+" y1"+y1+" x2"+x2+" y2"+y2);
-                SolitaireCoordinate c1 = b.getCoordinate(x1, y1);
-                SolitaireCoordinate c2 = b.getCoordinate(x2, y2);
-                if (c1 != null && c2 != null)
+                for(int i = 0; i<moves.size(); i++)
                 {
-                    //input was good, proceed to make the move if possible
-                    SolitaireCoordinate moveMade = b.move(c1, c2);
-                    
-                    if (moveMade == null)
-                    {
-                        //print error text that move was bad (bad input)
-                        System.out.println("Invalid Jump Attempted");
-                        firstChoice.setBackground(Color.BLUE);
-                    }
-                    else
-                    {
-                        middleButton = buts.get((-moveMade.y)+3).get((moveMade.x)+3);
-                        apply_move_to_graphics(clicked);
-                    }
+                    JButton src = buts.get((-moves.get(i).src.y)+3).get((moves.get(i).src.x)+3);
+                    src.setBackground(Color.red);
                 }
             }
+            else 
+            {
+                System.out.println("Timer stops now...");
+
+                //Stop Timer.
+                this.cancel();
+            }
         }
-        //PULL CODE DIRECTLY FROM C#
-        
-        //search through a list of all the buttons
-        //upon finding the coresponding button name that matches the one clicked, grab it's coordinates
-        //if state = 0, save the button
-        //if state = 1, make the move if possible
-    }//GEN-LAST:event_jButtonActionPerformed
+       }
+       
+        class MyTask2 extends TimerTask
+       {
+        private int times = 0;
+        public void run() {
+            times++;
+            if (times <= 5) 
+            {
+                for(int i = 0; i<moves.size(); i++)
+                {
+                    JButton src = buts.get((-moves.get(i).src.y)+3).get((moves.get(i).src.x)+3);
+                    src.setBackground(Color.blue);
+                }
+            }
+            else 
+            {
+                System.out.println("Timer stops now...");
+
+                //Stop Timer.
+                this.cancel();
+            }
+        }
+        }
+        MyTask t = new MyTask();
+        MyTask2 t2 = new MyTask2();
+ 
+        timer.schedule(t, 0, 300);
+        timer.schedule(t2,300,300);
+    }//GEN-LAST:event_hint_clicked
 
     
     private int getX(JButton r)
@@ -657,6 +748,24 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
         firstChoice.setBackground(Color.WHITE);  //set source to empty
         middleButton.setBackground(Color.WHITE);  //set middel to empty
     }
+    
+    boolean game_over()
+    {
+        if(b.win())
+        {
+            System.out.println("WINNER!");
+            return true;
+        }
+        else if(b.lose())
+        {
+            System.out.println("LOSER!");
+            return true;
+        }
+        
+        
+        return false;
+
+    }
 
     
     
@@ -688,6 +797,7 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton31;
     private javax.swing.JButton jButton32;
     private javax.swing.JButton jButton33;
+    private javax.swing.JButton jButton34;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
