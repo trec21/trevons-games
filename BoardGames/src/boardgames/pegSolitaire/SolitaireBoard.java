@@ -101,6 +101,15 @@ public class SolitaireBoard
             }
             return true;
         }
+        
+        boolean lose()
+        {
+            if(no_moves_left())
+            {
+                return true;
+            }
+            return false;
+        }
 
         /*public ArrayList<Board> getPossibleMoves()
         {
@@ -211,6 +220,26 @@ public class SolitaireBoard
             }
             return moves;
         }
+        
+        boolean no_moves_left()
+        {
+            for (int i = 0; i < BOARDSIZE; i++)
+            {
+                for (int j = 0; j < BOARDSIZE; j++)
+                {
+                    if (coordinates.get(i).get(j).onBoard && !coordinates.get(i).get(j).filled) //***********remove the '!' if using getJumpsSrc()
+                    {
+                        ArrayList<SolitaireMove> jumps = coordinates.get(i).get(j).getJumpsDest(this); //returns a list of all moves for 'this' as src
+                        if(jumps.size() > 0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        
 	
     //print the board to the terminal
     void printBoard()

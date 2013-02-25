@@ -21,6 +21,7 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
     int BOARDSIZE;
     SolitaireBoard b;
     int state;
+    boolean game_is_over;
     //int count = 0;
     JButton firstChoice;
     JButton middleButton;
@@ -45,6 +46,7 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
         
         b = new SolitaireBoard();
         state = 0;
+        game_is_over = false;
         firstChoice = new JButton();
         middleButton = new JButton();
         buts = new ArrayList<>();
@@ -556,65 +558,70 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
 
     private void jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActionPerformed
         // TODO add your handling code here:
-
-        JButton clicked = (JButton)evt.getSource();
-        
-        if (state == 0)
+        if(!game_is_over)
         {
-            x1 = getX(clicked);
-            y1 = getY(clicked);
-            SolitaireCoordinate c = b.getCoordinate(x1, y1);
-            if(c.filled)
+            JButton clicked = (JButton)evt.getSource();
+
+            if (state == 0)
             {
-                state = 1;
-                (clicked).setBackground(Color.GREEN);  //set selected to green
-                firstChoice = clicked;
+                x1 = getX(clicked);
+                y1 = getY(clicked);
+                SolitaireCoordinate c = b.getCoordinate(x1, y1);
+                if(c.filled)
+                {
+                    state = 1;
+                    (clicked).setBackground(Color.GREEN);  //set selected to green
+                    firstChoice = clicked;
+                }
+                else
+                {
+                    System.out.println("Invalid Source: no peg at "+x1+", "+y1);
+                }
             }
             else
             {
-                System.out.println("Invalid Source: no peg at "+x1+", "+y1);
+                if (clicked.equals(firstChoice))
+                {
+                    clicked.setBackground(Color.BLUE);  //set selected to darkblue
+                    state = 0;
+                }
+                else
+                {
+                    state = 0;
+                    x2 = getX(clicked);
+                    y2 = getY(clicked);
+                        //System.out.println("x1"+x1+" y1"+y1+" x2"+x2+" y2"+y2);
+                    SolitaireCoordinate c1 = b.getCoordinate(x1, y1);
+                    SolitaireCoordinate c2 = b.getCoordinate(x2, y2);
+                    if (c1 != null && c2 != null)
+                    {
+                        //input was good, proceed to make the move if possible
+                        SolitaireCoordinate moveMade = b.move(c1, c2);
+
+                        if (moveMade == null)
+                        {
+                            //print error text that move was bad (bad input)
+                            System.out.println("Invalid Jump Attempted");
+                            firstChoice.setBackground(Color.BLUE);
+                        }
+                        else
+                        {
+                            middleButton = buts.get((-moveMade.y)+3).get((moveMade.x)+3);
+                            apply_move_to_graphics(clicked);
+                        }
+                    }
+                }
+            }
+        
+            if(game_over())
+            {
+                game_is_over = true;
             }
         }
         else
         {
-            if (clicked.equals(firstChoice))
-            {
-                clicked.setBackground(Color.BLUE);  //set selected to darkblue
-                state = 0;
-            }
-            else
-            {
-                state = 0;
-                x2 = getX(clicked);
-                y2 = getY(clicked);
-                    //System.out.println("x1"+x1+" y1"+y1+" x2"+x2+" y2"+y2);
-                SolitaireCoordinate c1 = b.getCoordinate(x1, y1);
-                SolitaireCoordinate c2 = b.getCoordinate(x2, y2);
-                if (c1 != null && c2 != null)
-                {
-                    //input was good, proceed to make the move if possible
-                    SolitaireCoordinate moveMade = b.move(c1, c2);
-                    
-                    if (moveMade == null)
-                    {
-                        //print error text that move was bad (bad input)
-                        System.out.println("Invalid Jump Attempted");
-                        firstChoice.setBackground(Color.BLUE);
-                    }
-                    else
-                    {
-                        middleButton = buts.get((-moveMade.y)+3).get((moveMade.x)+3);
-                        apply_move_to_graphics(clicked);
-                    }
-                }
-            }
+            System.out.println("Game is over");
         }
-        //PULL CODE DIRECTLY FROM C#
-        
-        //search through a list of all the buttons
-        //upon finding the coresponding button name that matches the one clicked, grab it's coordinates
-        //if state = 0, save the button
-        //if state = 1, make the move if possible
     }//GEN-LAST:event_jButtonActionPerformed
 
     
@@ -656,6 +663,24 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
         destination.setBackground(Color.BLUE);  //set dest to filled
         firstChoice.setBackground(Color.WHITE);  //set source to empty
         middleButton.setBackground(Color.WHITE);  //set middel to empty
+    }
+    
+    boolean game_over()
+    {
+        if(b.win())
+        {
+            System.out.println("WINNER!");
+            return true;
+        }
+        else if(b.lose())
+        {
+            System.out.println("LOSER!");
+            return true;
+        }
+        
+        
+        return false;
+
     }
 
     
