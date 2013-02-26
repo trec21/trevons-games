@@ -35,67 +35,63 @@ public class SolitaireCoordinate {
         }
 
         ArrayList<SolitaireCoordinate> getTwoSpacesAway(SolitaireBoard b)
-	    {
-                ArrayList<SolitaireCoordinate> dests = new ArrayList<>();
-                if(y-2>=-3)//down
-                {
-                    dests.add(b.getCoordinate(x,y-2));
-                }
-                if(y+2<=3)//up
-                {
-                    dests.add(b.getCoordinate(x, y + 2));
-                }
-                if(x-2>=-3)//left
-                {
-                    dests.add(b.getCoordinate(x - 2, y));
-                }
-                if(x+2<=3)//right
-                {
-                    dests.add(b.getCoordinate(x + 2, y));
-                }
-                if(y-2>=-3 && x+2<=3)//down right
-                {
-                    dests.add(b.getCoordinate(x + 2, y - 2));
-                }
-                if(y-2>=-3 && x-2>=-3)//dwn left
-                {
-                    dests.add(b.getCoordinate(x - 2, y - 2));
-                }
-                if(y+2<=3 && x+2<=3)//up right
-                {
-                    dests.add(b.getCoordinate(x + 2, y + 2));
-                }
-                if(y+2<=3 && x-2>=-3)//up left
-                {
-                     dests.add(b.getCoordinate(x - 2, y + 2));
-                }
-                return dests;
-	    }
+        {
+            ArrayList<SolitaireCoordinate> dests = new ArrayList<>();
+            if(y-2>=-3)//down
+            {
+                dests.add(b.getCoordinate(x,y-2));
+            }
+            if(y+2<=3)//up
+            {
+                dests.add(b.getCoordinate(x, y + 2));
+            }
+            if(x-2>=-3)//left
+            {
+                dests.add(b.getCoordinate(x - 2, y));
+            }
+            if(x+2<=3)//right
+            {
+                dests.add(b.getCoordinate(x + 2, y));
+            }
+            if(y-2>=-3 && x+2<=3)//down right
+            {
+                dests.add(b.getCoordinate(x + 2, y - 2));
+            }
+            if(y-2>=-3 && x-2>=-3)//dwn left
+            {
+                dests.add(b.getCoordinate(x - 2, y - 2));
+            }
+            if(y+2<=3 && x+2<=3)//up right
+            {
+                dests.add(b.getCoordinate(x + 2, y + 2));
+            }
+            if(y+2<=3 && x-2>=-3)//up left
+            {
+                 dests.add(b.getCoordinate(x - 2, y + 2));
+            }
+            return dests;
+        }
 
-         ArrayList<SolitaireMove> getJumpsSrc(SolitaireBoard b)
-	    {
+        ArrayList<SolitaireMove> getJumpsSrc(SolitaireBoard b)
+        {
             ArrayList<SolitaireMove> jumps = new ArrayList<>();
-		    
-		    //get all positions that could be destinations
-
 
             ArrayList<SolitaireCoordinate> dests = getTwoSpacesAway(b);
-		    for(int i = 0; i<dests.size(); i++)
-		    {
-			    SolitaireCoordinate middle = canJump(b, dests.get(i));
-			    if(middle != null)
-			    {
+            for(int i = 0; i<dests.size(); i++)
+            {
+                SolitaireCoordinate middle = this.canJump(b, dests.get(i));
+                if(middle != null)
+                {
                     SolitaireMove m = new SolitaireMove(this, dests.get(i), middle);
                     jumps.add(m);
-				    //jumps.Add(dests[i]);
-			    }
-			    //System.out.println("hereish " + i);
-		    }
-		
-		    return jumps;
-	    }
+                }
+                //System.out.println("hereish " + i);
+            }
 
-         ArrayList<SolitaireMove> getJumpsDest(SolitaireBoard b)
+            return jumps;
+        }
+
+        ArrayList<SolitaireMove> getJumpsDest(SolitaireBoard b)
         {
             ArrayList<SolitaireMove> jumps = new ArrayList<>();
 
@@ -116,72 +112,71 @@ public class SolitaireCoordinate {
             return jumps;
         }
 
-         int max(int a, int b)
-	    {
-		    if(a>b)
-		    {
-			    return a;
-		    }
-		    return b;
-	    }
-         int min(int a, int b)
-	    {
-		    if(a<b)
-		    {
-			    return a;
-		    }
-		    return b;
-	    }
+        int max(int a, int b)
+        {
+            if(a>b)
+            {
+                return a;
+            }
+            return b;
+        }
+        int min(int a, int b)
+        {
+            if(a<b)
+            {
+                return a;
+            }
+            return b;
+        }
 	
 	    //finds out the direction of the jump
          int getJumpType(SolitaireCoordinate dest)
-	    {
-		    //right
-		    if(this.x+2==dest.x && dest.y == this.y)
-		    {
-		    
-			    return 0;
-		    }
-		    //left
-		    if(this.x-2==dest.x && dest.y == this.y)
-		    {
-			    return 1;
-		    }
-		    //up
-		    if(this.y+2==dest.y && dest.x == this.x)
-		    {
-			    return 2;
-		    }
-		    //down
-		    if(this.y-2==dest.y && dest.x == this.x)
-		    {
-			    return 3;
-		    }
-		    //upright
+        {
+                //right
+            if(this.x+2==dest.x && dest.y == this.y)
+            {
+                return 0;
+            }
+            //left
+            if(this.x-2==dest.x && dest.y == this.y)
+            {
+                return 1;
+            }
+            //up
+            if(this.y+2==dest.y && dest.x == this.x)
+            {
+                return 2;
+            }
+            //down
+            if(this.y-2==dest.y && dest.x == this.x)
+            {
+                return 3;
+            }
+                //upright
             if (this.y + 2 == dest.y && this.x + 2 == dest.x)
-		    {
-			    return 4;
-		    }
-		    //upleft
+            {
+                return 4;
+            }
+            //upleft
             if (this.y + 2 == dest.y && this.x - 2 == dest.x)
-		    {
-			    return 5;
-		    }
-		    //downright
+            {
+                return 5;
+            }
+            //downright
             if (this.y - 2 == dest.y && this.x + 2 == dest.x)
-		    {
-			    return 6;
-		    }
-		    //downleft
+            {
+                return 6;
+            }
+            //downleft
             if (this.y - 2 == dest.y && this.x - 2 == dest.x)
-		    {
-			    return 7;
-		    }
-		
-		    //err: should never happen tho
-		    //System.out.println("Err: in board getJumpType() function: shouldn't happen but it did");
-		    return -1;
-	    }
+            {
+                return 7;
+            }
+
+            //err: should never happen tho
+            //System.out.println("Err: in board getJumpType() function: shouldn't happen but it did");
+            return -1;
+        }
 	
 	    //checks if the src(this) can jump to the dest
         SolitaireCoordinate canJump(SolitaireBoard b, SolitaireCoordinate dest) //returns the middle piece (that has a peg in it) if the requested move is possible; if not returns null
