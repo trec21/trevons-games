@@ -6,6 +6,7 @@ package boardgames.pegSolitaire;
 
 import java.awt.*;
 import javax.swing.*;
+import java.util.*;
 
 /**
  *
@@ -16,8 +17,121 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
     /**
      * Creates new form SolitaireGuiPanel
      */
+    
+    int BOARDSIZE;
+    SolitaireBoard b;
+    int state;
+    boolean game_is_over;
+    //int count = 0;
+    JButton firstChoice;
+    JButton middleButton;
+    ArrayList<ArrayList<JButton>> buts;
+    
+    ArrayList<JButton> column1;
+    ArrayList<JButton> column2;
+    ArrayList<JButton> column3;
+    ArrayList<JButton> column4;
+    ArrayList<JButton> column5;
+    ArrayList<JButton> column6;
+    ArrayList<JButton> column7;
+
+    int x1;
+    int x2;
+
+    int y1;
+    int y2;
+    
     public SolitaireGuiPanel() {
         initComponents();
+        
+        b = new SolitaireBoard();
+        state = 0;
+        game_is_over = false;
+        firstChoice = new JButton();
+        middleButton = new JButton();
+        buts = new ArrayList<>();
+        BOARDSIZE = 7;
+        x1 = 0;
+        x2 = 0;
+        y1 = 0;
+        y2 = 0;
+        init_buttons();
+    }
+    
+    void init_buttons()
+    {
+        column1 = new ArrayList<>();
+        column2 = new ArrayList<>();
+        column3 = new ArrayList<>();
+        column4 = new ArrayList<>();
+        column5 = new ArrayList<>();
+        column6 = new ArrayList<>();
+        column7 = new ArrayList<>();
+        
+        JButton offBoard = new JButton(); //used to represent the buttons that would be on the screen if it were a full board
+        
+        column1.add(offBoard);
+        column1.add(offBoard);
+        column1.add(jButton1);
+        column1.add(jButton3);
+        column1.add(jButton2);
+        column1.add(offBoard);
+        column1.add(offBoard);
+        buts.add(column1);
+        
+        column2.add(offBoard);
+        column2.add(offBoard);
+        column2.add(jButton4);
+        column2.add(jButton5);
+        column2.add(jButton9);
+        column2.add(offBoard);
+        column2.add(offBoard);
+        buts.add(column2);
+        
+        column3.add(jButton13);
+        column3.add(jButton12);
+        column3.add(jButton8);
+        column3.add(jButton7);
+        column3.add(jButton6);
+        column3.add(jButton10);
+        column3.add(jButton11);
+        buts.add(column3);
+        
+        column4.add(jButton15);
+        column4.add(jButton16);
+        column4.add(jButton17);
+        column4.add(jButton19);
+        column4.add(jButton14);
+        column4.add(jButton25);
+        column4.add(jButton26);
+        buts.add(column4);
+        
+        column5.add(jButton30);
+        column5.add(jButton28);
+        column5.add(jButton18);
+        column5.add(jButton20);
+        column5.add(jButton23);
+        column5.add(jButton27);
+        column5.add(jButton29);
+        buts.add(column5);
+        
+        column6.add(offBoard);
+        column6.add(offBoard);
+        column6.add(jButton21);
+        column6.add(jButton22);
+        column6.add(jButton24);
+        column6.add(offBoard);
+        column6.add(offBoard);
+        buts.add(column6);
+        
+        column7.add(offBoard);
+        column7.add(offBoard);
+        column7.add(jButton31);
+        column7.add(jButton32);
+        column7.add(jButton33);
+        column7.add(offBoard);
+        column7.add(offBoard);
+        buts.add(column7);
     }
 
     /**
@@ -62,235 +176,243 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
         jButton31 = new javax.swing.JButton();
         jButton32 = new javax.swing.JButton();
         jButton33 = new javax.swing.JButton();
+        jButton34 = new javax.swing.JButton();
 
         jButton1.setBackground(new java.awt.Color(0, 0, 255));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton2.setBackground(new java.awt.Color(0, 0, 255));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton3.setBackground(new java.awt.Color(0, 0, 255));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton4.setBackground(new java.awt.Color(0, 0, 255));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton5.setBackground(new java.awt.Color(0, 0, 255));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton6.setBackground(new java.awt.Color(0, 0, 255));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton7.setBackground(new java.awt.Color(0, 0, 255));
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton8.setBackground(new java.awt.Color(0, 0, 255));
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton9.setBackground(new java.awt.Color(0, 0, 255));
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton10.setBackground(new java.awt.Color(0, 0, 255));
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton11.setBackground(new java.awt.Color(0, 0, 255));
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton12.setBackground(new java.awt.Color(0, 0, 255));
         jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton13.setBackground(new java.awt.Color(0, 0, 255));
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton14.setBackground(new java.awt.Color(0, 0, 255));
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton15.setBackground(new java.awt.Color(0, 0, 255));
         jButton15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton15ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton16.setBackground(new java.awt.Color(0, 0, 255));
         jButton16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton17.setBackground(new java.awt.Color(0, 0, 255));
         jButton17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton18.setBackground(new java.awt.Color(0, 0, 255));
         jButton18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
-        jButton19.setBackground(new java.awt.Color(0, 0, 255));
+        jButton19.setBackground(new java.awt.Color(255, 255, 255));
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton19ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton20.setBackground(new java.awt.Color(0, 0, 255));
         jButton20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton20ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton21.setBackground(new java.awt.Color(0, 0, 255));
         jButton21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton21ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton22.setBackground(new java.awt.Color(0, 0, 255));
         jButton22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton22ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton23.setBackground(new java.awt.Color(0, 0, 255));
         jButton23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton23ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton24.setBackground(new java.awt.Color(0, 0, 255));
         jButton24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton24ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton25.setBackground(new java.awt.Color(0, 0, 255));
         jButton25.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton25ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton26.setBackground(new java.awt.Color(0, 0, 255));
         jButton26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton26ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton27.setBackground(new java.awt.Color(0, 0, 255));
         jButton27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton27ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton28.setBackground(new java.awt.Color(0, 0, 255));
         jButton28.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton28ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton29.setBackground(new java.awt.Color(0, 0, 255));
         jButton29.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton29ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton30.setBackground(new java.awt.Color(0, 0, 255));
         jButton30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton30ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton31.setBackground(new java.awt.Color(0, 0, 255));
         jButton31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton31ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton32.setBackground(new java.awt.Color(0, 0, 255));
         jButton32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton32ActionPerformed(evt);
+                jButtonActionPerformed(evt);
             }
         });
 
         jButton33.setBackground(new java.awt.Color(0, 0, 255));
         jButton33.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton33ActionPerformed(evt);
+                jButtonActionPerformed(evt);
+            }
+        });
+
+        jButton34.setText("Hint");
+        jButton34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hint_clicked(evt);
             }
         });
 
@@ -317,26 +439,27 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
                                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(4, 4, 4)
-                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(85, Short.MAX_VALUE))))
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(85, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -389,24 +512,28 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jButton11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -442,139 +569,206 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActionPerformed
         // TODO add your handling code here:
-        System.out.println("hi");
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if(!game_is_over)
+        {
+            JButton clicked = (JButton)evt.getSource();
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+            if (state == 0)
+            {
+                x1 = getX(clicked);
+                y1 = getY(clicked);
+                SolitaireCoordinate c = b.getCoordinate(x1, y1);
+                if(c.filled)
+                {
+                    state = 1;
+                    (clicked).setBackground(Color.GREEN);  //set selected to green
+                    firstChoice = clicked;
+                }
+                else
+                {
+                    System.out.println("Invalid Source: no peg at "+x1+", "+y1);
+                }
+            }
+            else
+            {
+                if (clicked.equals(firstChoice))
+                {
+                    clicked.setBackground(Color.BLUE);  //set selected to darkblue
+                    state = 0;
+                }
+                else
+                {
+                    state = 0;
+                    x2 = getX(clicked);
+                    y2 = getY(clicked);
+                        //System.out.println("x1"+x1+" y1"+y1+" x2"+x2+" y2"+y2);
+                    SolitaireCoordinate c1 = b.getCoordinate(x1, y1);
+                    SolitaireCoordinate c2 = b.getCoordinate(x2, y2);
+                    if (c1 != null && c2 != null)
+                    {
+                        //input was good, proceed to make the move if possible
+                        SolitaireCoordinate moveMade = b.move(c1, c2);
+
+                        if (moveMade == null)
+                        {
+                            //print error text that move was bad (bad input)
+                            System.out.println("Invalid Jump Attempted");
+                            firstChoice.setBackground(Color.BLUE);
+                        }
+                        else
+                        {
+                            middleButton = buts.get((-moveMade.y)+3).get((moveMade.x)+3);
+                            apply_move_to_graphics(clicked);
+                        }
+                    }
+                }
+            }
+        
+            if(game_over())
+            {
+                game_is_over = true;
+            }
+        }
+        else
+        {
+            System.out.println("Game is over");
+        }
+    }//GEN-LAST:event_jButtonActionPerformed
+
+    private void hint_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hint_clicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        final ArrayList<SolitaireMove> moves = b.get_all_possible_moves();
+        
+        for(int i = 0; i<moves.size(); i++)
+        {
+            //JButton middleButton = buts.get((-moves.get(i).middle.y)+3).get((moves.get(i).middle.x)+3);
+            JButton src = buts.get((-moves.get(i).src.y)+3).get((moves.get(i).src.x)+3);
+            //JButton dest = buts.get((-moves.get(i).dest.y)+3).get((moves.get(i).dest.x)+3);
+            
+            src.setBackground(Color.red);
+            //need a way to go through and reset these to blue afterward
+        }
+        
+        //try to make it so theres a timer here to make them blink red 3 times and then go back go blue
+         java.util.Timer timer = new java.util.Timer("blink buttons");
+ 
+        //2- Taking an instance of class contains your repeated method.
+         
+       class MyTask extends TimerTask
+       {
+        private int times = 0;
+        public void run() {
+            times++;
+            if (times <= 5) 
+            {
+                for(int i = 0; i<moves.size(); i++)
+                {
+                    JButton src = buts.get((-moves.get(i).src.y)+3).get((moves.get(i).src.x)+3);
+                    src.setBackground(Color.red);
+                }
+            }
+            else 
+            {
+                System.out.println("Timer stops now...");
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+                //Stop Timer.
+                this.cancel();
+            }
+        }
+       }
+       
+        class MyTask2 extends TimerTask
+       {
+        private int times = 0;
+        public void run() {
+            times++;
+            if (times <= 5) 
+            {
+                for(int i = 0; i<moves.size(); i++)
+                {
+                    JButton src = buts.get((-moves.get(i).src.y)+3).get((moves.get(i).src.x)+3);
+                    src.setBackground(Color.blue);
+                }
+            }
+            else 
+            {
+                System.out.println("Timer stops now...");
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+                //Stop Timer.
+                this.cancel();
+            }
+        }
+        }
+        MyTask t = new MyTask();
+        MyTask2 t2 = new MyTask2();
+ 
+        timer.schedule(t, 0, 300);
+        timer.schedule(t2,300,300);
+    }//GEN-LAST:event_hint_clicked
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    
+    private int getX(JButton r)
+    {
+        for (int i = 0; i < buts.size(); i++) //columns or x
+        {
+            for (int j = 0; j < buts.get(i).size(); j++) //rows or y
+            {
+                if (r.equals(buts.get(i).get(j)))
+                {
+                    return j-3;
+                }
+            }
+        }
+        return -99;
+    }
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private int getY(JButton r)
+    {
+        for (int i = 0; i < buts.size(); i++) //columns or x
+        {
+            for (int j = 0; j < buts.get(i).size(); j++) //rows or y
+            {
+                if (r.equals(buts.get(i).get(j)))
+                {
+                    return -(i-3);
+                }
+            }
+        }
+        return -99;
+    }
+    
+    private void apply_move_to_graphics(JButton destination)
+    {
+        //firstChoice is the source
+        //middleButton is the middle
+        
+        destination.setBackground(Color.BLUE);  //set dest to filled
+        firstChoice.setBackground(Color.WHITE);  //set source to empty
+        middleButton.setBackground(Color.WHITE);  //set middel to empty
+    }
+    
+    boolean game_over()
+    {
+        if(b.win())
+        {
+            System.out.println("WINNER!");
+            return true;
+        }
+        else if(b.lose())
+        {
+            System.out.println("LOSER!");
+            return true;
+        }
+        
+        
+        return false;
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton13ActionPerformed
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton14ActionPerformed
-
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton15ActionPerformed
-
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton16ActionPerformed
-
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton17ActionPerformed
-
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton18ActionPerformed
-
-    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton19ActionPerformed
-
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton20ActionPerformed
-
-    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton21ActionPerformed
-
-    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton22ActionPerformed
-
-    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton23ActionPerformed
-
-    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton24ActionPerformed
-
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton25ActionPerformed
-
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton26ActionPerformed
-
-    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton27ActionPerformed
-
-    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton28ActionPerformed
-
-    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton29ActionPerformed
-
-    private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton30ActionPerformed
-
-    private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton31ActionPerformed
-
-    private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton32ActionPerformed
-
-    private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton33ActionPerformed
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -603,6 +797,7 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton31;
     private javax.swing.JButton jButton32;
     private javax.swing.JButton jButton33;
+    private javax.swing.JButton jButton34;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
