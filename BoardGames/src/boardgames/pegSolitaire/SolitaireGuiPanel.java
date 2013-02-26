@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,6 +30,7 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
     JButton firstChoice;
     JButton middleButton;
     ArrayList<ArrayList<JButton>> buts;
+    ArrayList<Thread> threads;
     
     ArrayList<JButton> column1;
     ArrayList<JButton> column2;
@@ -53,6 +56,7 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
         firstChoice = new JButton();
         middleButton = new JButton();
         buts = new ArrayList<>();
+        threads = new ArrayList<>();
         BOARDSIZE = 7;
         x1 = 0;
         x2 = 0;
@@ -719,10 +723,24 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_hint_clicked
 
+    void kill_all_children(Thread current_thread) throws InterruptedException
+    {
+        for(Thread t : threads)
+        {
+            if(!t.equals(current_thread))
+            {
+                System.out.println("killing thread: "+t.getName());
+                t.interrupt();
+                
+            }
+        }
+    }
+    
     private void cheat_clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cheat_clicked
         // TODO add your handling code here:
         
         ArrayList<SolitaireMove> moves = b.get_all_possible_moves();
+        threads.clear();
         
         for(final SolitaireMove m : moves)
         {
@@ -732,25 +750,55 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
             class MyRunnable implements Runnable 
             {
                 @Override
-                public void run() 
+                public void run()
                 {
-                    SolitaireBoard b_clone = new SolitaireBoard(b);
-                    b_clone.make_move(m);
-                    
-                    boolean solution_move = find_proper_move();
-                    if(solution_move)
+                    //if the "kill all threads" variable is set, then do Thread.currentThread().interrupt();
+                    if(!Thread.currentThread().isInterrupted())
                     {
-                        b.make_move(m);
-                        firstChoice = buts.get((-m.src.y)+3).get((m.src.x)+3);
-                        middleButton = buts.get((-m.middle.y)+3).get((m.middle.x)+3);
-                        JButton destination = buts.get((-m.dest.y)+3).get((m.dest.x)+3);
-                        apply_move_to_graphics(destination);
+                        SolitaireBoard b_clone = new SolitaireBoard(b);
+                        b_clone.make_move(m);
+
+                        boolean solution_move = find_proper_move(b_clone);
+                        if(solution_move)
+                        {
+                            try 
+                            {
+                                //kill all other threads
+                                kill_all_children(Thread.currentThread());
+                            } 
+                            catch (InterruptedException ex) 
+                            {
+                                Logger.getLogger(SolitaireGuiPanel.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            apply_move_to_board(m);
+                            firstChoice = buts.get((-m.src.y)+3).get((m.src.x)+3);
+                            middleButton = buts.get((-m.middle.y)+3).get((m.middle.x)+3);
+                            JButton destination = buts.get((-m.dest.y)+3).get((m.dest.x)+3);
+                            apply_move_to_graphics(destination);
+                            //Thread.currentThread().interrupt();
+                        }
+                        b_clone.un_make_move(m);
                     }
-                    b_clone.un_make_move(m);
+                    else
+                    {
+                        return;
+                    }
+                }
+                
+                private synchronized void apply_move_to_board(SolitaireMove m)
+                {
+                    b.make_move(m);
                 }
             }
             
-            (new Thread(new MyRunnable())).start();
+            MyRunnable r = new MyRunnable();
+            Thread t = new Thread(r);
+            threads.add(t);
+            System.out.println("Thread starting: "+t.getName());
+            t.start();
+            
+            
+            
             //non-threading version (way too slow and inefficient)
             /*b.make_move(m);
             boolean solution_move = find_proper_move();
@@ -764,37 +812,39 @@ public class SolitaireGuiPanel extends javax.swing.JPanel {
             }
             b.un_make_move(m);*/
         }
+        
+        
     }//GEN-LAST:event_cheat_clicked
 
-    boolean find_proper_move()
+    boolean find_proper_move(SolitaireBoard b_clone)
     {
         //System.out.println(x);
-        ArrayList<SolitaireMove> moves = b.get_all_possible_moves();
+        ArrayList<SolitaireMove> moves = b_clone.get_all_possible_moves();
 
-        if (moves.size() == 0 && b.win())
+        if (moves.isEmpty() && b_clone.win())
         {
             System.out.println("WIN found");
             return true;
         }
-        else if (moves.size() == 0)
+        else if (moves.isEmpty())
         {
-            //System.out.println("Loss: backtracking");
+            System.out.println("Loss: backtracking");
             return false;
         }
 
         for(SolitaireMove m : moves)
         {
-            b.make_move(m);
+            b_clone.make_move(m);
             
             //possibly put all of these recursive calls in their own threads as well to see if it helps
                 //again, as they finish, check for a "solved == true" and when it finds one, kill the ones still running
-            boolean solved = find_proper_move();
+            boolean solved = find_proper_move(b_clone);
             if (solved)
             {
                 b.un_make_move(m);
                 return true;
             }
-            b.un_make_move(m);
+            b_clone.un_make_move(m);
         }
         return false;
     }
