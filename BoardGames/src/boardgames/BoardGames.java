@@ -24,7 +24,7 @@ public class BoardGames {
                 new Test_GUI().setVisible(true);
             }
         });*/
-        Test_GUI gui = new Test_GUI();
+        MainMenu gui = new MainMenu();
         
         JFrame frame = new JFrame("GUI");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
