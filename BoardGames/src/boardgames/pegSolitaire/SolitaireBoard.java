@@ -8,11 +8,13 @@ public class SolitaireBoard
         public int BOARDSIZE = 7;
 
         //member variables
-        ArrayList< ArrayList<SolitaireCoordinate> > coordinates = new ArrayList< ArrayList<SolitaireCoordinate> >();
+        ArrayList< ArrayList<SolitaireCoordinate> > coordinates = new ArrayList<>();
+        int pieces_left;
 
         //constructors
         public SolitaireBoard()
-	    {
+        {
+            pieces_left = 32;
             for (int i = 0; i < BOARDSIZE; i++)
             {
                 ArrayList<SolitaireCoordinate> list_c = new ArrayList<SolitaireCoordinate>();
@@ -24,34 +26,36 @@ public class SolitaireBoard
                 coordinates.add(list_c);
             }
 
-		    int x = -3;
-		    int y = 3;
-		    for(int i = 0; i<BOARDSIZE; i++)
-		    {
-			    for(int j = 0; j<BOARDSIZE; j++)
-			    {
-				    boolean o = true;
-				    if((y<-1 || y>1) && (x<-1 || x>1))
-				    {
-					    o = false;
-				    }
-				    boolean f = true;
-				    if(x==0 && y==0)
-				    {
-					    f = false;
-				    }
-				
-				    SolitaireCoordinate c = new SolitaireCoordinate(x,y,f,o);
-				    coordinates.get(i).set(j,c);
-				
-				    x++;
-			    }
-			    y--;
-			    x=-3;
-		    }
-	    }
+            int x = -3;
+            int y = 3;
+            for(int i = 0; i<BOARDSIZE; i++)
+            {
+                for(int j = 0; j<BOARDSIZE; j++)
+                {
+                    boolean o = true;
+                    if((y<-1 || y>1) && (x<-1 || x>1))
+                    {
+                        o = false;
+                    }
+                    boolean f = true;
+                    if(x==0 && y==0)
+                    {
+                        f = false;
+                    }
+
+                    SolitaireCoordinate c = new SolitaireCoordinate(x,y,f,o);
+                    coordinates.get(i).set(j,c);
+
+                    x++;
+                }
+                y--;
+                x=-3;
+            }
+        }
+        
         public SolitaireBoard(SolitaireBoard b)
-	    {
+        {
+            pieces_left = b.pieces_left;
             for (int i = 0; i < BOARDSIZE; i++)
             {
                 ArrayList<SolitaireCoordinate> list_c = new ArrayList<SolitaireCoordinate>();
@@ -63,24 +67,18 @@ public class SolitaireBoard
                 coordinates.add(list_c);
             }
 
-		    for(int i = 0; i<BOARDSIZE; i++)
-		    {
-			    for(int j = 0; j<BOARDSIZE; j++)
-			    {
-				    coordinates.get(i).set(j,b.coordinates.get(i).get(j));
-			    }
-		    }
-	    }
+            for(int i = 0; i<BOARDSIZE; i++)
+            {
+                for(int j = 0; j<BOARDSIZE; j++)
+                {
+                    coordinates.get(i).set(j,b.coordinates.get(i).get(j));
+                }
+            }
+        }
 
         //end constructors
 
         //member functions
-        private boolean is_on_board(SolitaireCoordinate c)
-        {
-            if((c.x < -1 || c.x > 1) && (c.y < 2 || c.y > -2))
-                return true;
-            return false;
-        }
 
         public boolean win()
         {
@@ -111,25 +109,6 @@ public class SolitaireBoard
             return false;
         }
 
-        /*public ArrayList<Board> getPossibleMoves()
-        {
-            ArrayList<Board> moves = new ArrayList<Board>();
-            for (int i = 0; i < BOARDSIZE; i++)
-            {
-                for (int j = 0; j < BOARDSIZE; j++)
-                {
-                    ArrayList<Coordinate> jumps = coordinates[i][j].getJumps(this); //returns a list of all destinations from this src
-                    for (int k = 0; k < jumps.Count; k++)
-                    {
-                        Board b = new Board(this);
-                        b.move(coordinates[i][j], jumps[i]);
-                        moves.Add(b);
-                    }
-                }
-            }
-            return moves;
-        }*/
-
         public SolitaireCoordinate getCoordinate(int x, int y)
         {
             for (int i = 0; i < BOARDSIZE; i++)
@@ -155,6 +134,7 @@ public class SolitaireBoard
                 middlePeg.filled = false;
                 src.filled = false;
                 dest.filled = true;
+                pieces_left--;
 
                 return middlePeg;
             }
@@ -172,6 +152,7 @@ public class SolitaireBoard
                 middlePeg.filled = false;
                 srcPeg.filled = false;
                 destPeg.filled = true;
+                pieces_left--;
 
                 return middlePeg;
             }
@@ -180,26 +161,13 @@ public class SolitaireBoard
 
         public void un_make_move(SolitaireMove move)
         {
-            /*Coordinate srcPeg = this.getCoordinate(move.src.x, move.src.y);
-            Coordinate destPeg = this.getCoordinate(move.dest.x, move.dest.y);
-            Coordinate middlePeg = destPeg.canJump(this, srcPeg,false); //see if you can jump from dest to src
-
-            if (middlePeg != null)
-            {
-                middlePeg.filled = false;
-                srcPeg.filled = false;
-                destPeg.filled = true;
-
-                return middlePeg;
-            }
-            return null;*/
-
             SolitaireCoordinate srcPeg = this.getCoordinate(move.src.x, move.src.y);
             SolitaireCoordinate destPeg = this.getCoordinate(move.dest.x, move.dest.y);
             SolitaireCoordinate middlePeg = this.getCoordinate(move.middle.x, move.middle.y);
             middlePeg.filled = true;
             srcPeg.filled = true;
             destPeg.filled = false;
+            pieces_left++;
         }
 
         public ArrayList<SolitaireMove> get_all_possible_moves()
@@ -213,7 +181,15 @@ public class SolitaireBoard
                 {
                     if (coordinates.get(i).get(j).onBoard && !coordinates.get(i).get(j).filled) //***********remove the '!' if using getJumpsSrc()
                     {
-                        ArrayList<SolitaireMove> jumps = coordinates.get(i).get(j).getJumpsDest(this); //returns a list of all moves for 'this' as src
+                        ArrayList<SolitaireMove> jumps;
+                        if(pieces_left>16) //still more than half the pieces are left
+                        {
+                            jumps = coordinates.get(i).get(j).getJumpsDest(this); //returns a list of all moves for 'this' as src
+                        }
+                        else //there are now less than half the pieces left, so check moves based on pegs instead of open spaces
+                        {
+                            jumps = coordinates.get(i).get(j).getJumpsSrc(this); //returns a list of all moves for 'this' as src
+                        }
                         moves.addAll(jumps);
                     }
                 }
