@@ -173,6 +173,9 @@ public class Test_GUI extends javax.swing.JPanel {
 
     private void BattleshipClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BattleshipClicked
         // TODO add your handling code here:
+        BattleShip b = new BattleShip();
+        
+        b.PlayGame();
     }//GEN-LAST:event_BattleshipClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
