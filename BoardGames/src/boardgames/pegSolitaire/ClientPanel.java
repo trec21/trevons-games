@@ -64,9 +64,10 @@ public class ClientPanel extends javax.swing.JPanel {
         y1 = 0;
         y2 = 0;
         init_buttons();
+        run();
     }
     
-    void init_buttons()
+    private void init_buttons()
     {
         column1 = new ArrayList<>();
         column2 = new ArrayList<>();
@@ -147,7 +148,7 @@ public class ClientPanel extends javax.swing.JPanel {
     ObjectInputStream in;
     String message;
 
-    void run()
+    private void run()
     {
         try
         {
@@ -223,11 +224,11 @@ public class ClientPanel extends javax.swing.JPanel {
             ioException.printStackTrace();
         }
     }
-    public static void main(String[] args)
+    /*public static void main(String[] args)
     {
         ClientPanel client = new ClientPanel();
         client.run();
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -779,7 +780,9 @@ public class ClientPanel extends javax.swing.JPanel {
                             apply_move_to_graphics(clicked);
                             //tell server you made a move and what it was
                             myTurn = false;
-                            //sendMessage(move.toString());
+                            SolitaireMove moveToSend = new SolitaireMove(c1, c2, moveMade);
+                            sendMessage(moveToSend.toString());
+                            waitForMove();
                         }
                     }
                 }
@@ -792,20 +795,7 @@ public class ClientPanel extends javax.swing.JPanel {
         }
         else if(!myTurn)
         {
-            //wait for your turn, continuously ask for msg from in till you get it
-            try
-            {
-                while(message.equals(""))
-                    message = (String)in.readObject();
-            }
-            catch(ClassNotFoundException classNot)
-            {
-                System.err.println("data received in unknown format");
-            } 
-            catch (IOException ex) 
-            {
-                Logger.getLogger(ClientPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            System.out.println("Waiting for opponent to make a move");
         }
         else if(disable_buttons)
         {
@@ -817,6 +807,47 @@ public class ClientPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButtonActionPerformed
 
+    void waitForMove()
+    {
+        //wait for your turn, continuously ask for msg from in till you get it
+        try
+        {
+            message = "";
+            while(message.equals(""))
+            {
+                message = (String)in.readObject();
+                SolitaireMove otherPlayerMove = getMoveFromString(message);
+                b.make_move(otherPlayerMove);
+            }
+        }
+        catch(ClassNotFoundException classNot)
+        {
+            System.err.println("data received in unknown format");
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(ClientPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
+    
+    SolitaireMove getMoveFromString(String s)
+    {
+        int srcx = Integer.parseInt(s.substring(0, 1));
+        int srcy = Integer.parseInt(s.substring(2, 3));
+        int destx = Integer.parseInt(s.substring(4, 5));
+        int desty = Integer.parseInt(s.substring(6, 7));
+        int midx = Integer.parseInt(s.substring(8, 9));
+        int midy = Integer.parseInt(s.substring(10, 11));
+        
+        //break the string into the 3 coordinates
+        SolitaireCoordinate src = new SolitaireCoordinate(srcx,srcy,true,true);
+        SolitaireCoordinate dest = new SolitaireCoordinate(destx,desty,true,true);
+        SolitaireCoordinate mid = new SolitaireCoordinate(midx,midy,true,true);
+        //set the parts of a local move to the 3 coordinates
+        SolitaireMove otherPlayerMove = new SolitaireMove(src,dest,mid);
+        return otherPlayerMove;
+    }
+    
      private int getX(JButton r)
     {
         for (int i = 0; i < buts.size(); i++) //columns or x

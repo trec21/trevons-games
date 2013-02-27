@@ -8,6 +8,8 @@ import java.net.*;
 import java.io.*;
 import javax.swing.*;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -63,9 +65,10 @@ public class ServerPanel extends javax.swing.JPanel {
         y1 = 0;
         y2 = 0;
         init_buttons();
+        run();
     }
     
-    void init_buttons()
+    private void init_buttons()
     {
         column1 = new ArrayList<>();
         column2 = new ArrayList<>();
@@ -146,7 +149,7 @@ public class ServerPanel extends javax.swing.JPanel {
     ObjectInputStream in;
     String message;
     
-    void run()
+    private void run()
     {
         try
         {
@@ -163,15 +166,10 @@ public class ServerPanel extends javax.swing.JPanel {
             in = new ObjectInputStream(connection.getInputStream());
             sendMessage("Connection successful");
             //4. The two parts communicate via the input and output streams
-            do
+            /*do
             {
                 try
                 {
-                    /*message = (String)in.readObject();
-                    System.out.println("client>" + message);
-                    if (message.equals("bye"))
-                            sendMessage("bye");*/
-
                     //System.out.println("f1");
                     message = scan.next();
                     //System.out.println("f2");
@@ -188,7 +186,7 @@ public class ServerPanel extends javax.swing.JPanel {
                 {
                     System.err.println("Data received in unknown format");
                 }
-            } while(!message.equals("bye"));
+            } while(!message.equals("bye"));*/
         }
         catch(IOException ioException)
         {
@@ -222,13 +220,13 @@ public class ServerPanel extends javax.swing.JPanel {
             ioException.printStackTrace();
         }
     }
-    public static void main(String[] args)
+    /*public static void main(String[] args)
     {
         ServerPanel server = new ServerPanel();
         while(true){
                 server.run();
         }
-    }
+    }*/
     
 
     /**
@@ -701,7 +699,6 @@ public class ServerPanel extends javax.swing.JPanel {
                 else
                 {
                     state = 0;
-                    myTurn = false;
                     x2 = getX(clicked);
                     y2 = getY(clicked);
                         //System.out.println("x1"+x1+" y1"+y1+" x2"+x2+" y2"+y2);
@@ -723,6 +720,10 @@ public class ServerPanel extends javax.swing.JPanel {
                             middleButton = buts.get((-moveMade.y)+3).get((moveMade.x)+3);
                             apply_move_to_graphics(clicked);
                             //tell the client that you made a move and what move it was
+                            myTurn = false;
+                            SolitaireMove moveToSend = new SolitaireMove(c1, c2, moveMade);
+                            sendMessage(moveToSend.toString());
+                            waitForMove();
                         }
                     }
                 }
@@ -732,6 +733,10 @@ public class ServerPanel extends javax.swing.JPanel {
             {
                 game_is_over = true;
             }
+        }
+        else if(!myTurn)
+        {
+            System.out.println("Waiting for opponent to make a move");
         }
         else if(disable_buttons)
         {
@@ -743,6 +748,47 @@ public class ServerPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButtonActionPerformed
 
+    void waitForMove()
+    {
+        //wait for your turn, continuously ask for msg from in till you get it
+        try
+        {
+            message = "";
+            while(message.equals(""))
+            {
+                message = (String)in.readObject();
+                SolitaireMove otherPlayerMove = getMoveFromString(message);
+                b.make_move(otherPlayerMove);
+            }
+        }
+        catch(ClassNotFoundException classNot)
+        {
+            System.err.println("data received in unknown format");
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(ClientPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
+    
+    SolitaireMove getMoveFromString(String s)
+    {
+        int srcx = Integer.parseInt(s.substring(0, 1));
+        int srcy = Integer.parseInt(s.substring(2, 3));
+        int destx = Integer.parseInt(s.substring(4, 5));
+        int desty = Integer.parseInt(s.substring(6, 7));
+        int midx = Integer.parseInt(s.substring(8, 9));
+        int midy = Integer.parseInt(s.substring(10, 11));
+        
+        //break the string into the 3 coordinates
+        SolitaireCoordinate src = new SolitaireCoordinate(srcx,srcy,true,true);
+        SolitaireCoordinate dest = new SolitaireCoordinate(destx,desty,true,true);
+        SolitaireCoordinate mid = new SolitaireCoordinate(midx,midy,true,true);
+        //set the parts of a local move to the 3 coordinates
+        SolitaireMove otherPlayerMove = new SolitaireMove(src,dest,mid);
+        return otherPlayerMove;
+    }
+    
     private void hintClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hintClicked
         // TODO add your handling code here:
         
