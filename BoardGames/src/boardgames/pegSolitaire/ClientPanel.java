@@ -152,9 +152,12 @@ public class ClientPanel extends javax.swing.JPanel {
     {
         try
         {
-            Scanner scan = new Scanner(System.in);
+            //Scanner scan = new Scanner(System.in);
             //1. creating a socket to connect to the server
-            requestSocket = new Socket("localhost", 2004);
+            byte [] b = new byte[] {(byte)165,(byte)91,(byte)11,(byte)61};
+            InetAddress addr = null;
+            addr = InetAddress.getByAddress(b);
+            requestSocket = new Socket(addr, 2004);
             System.out.println("Connected to localhost in port 2004");
             //2. get Input and Output streams
             out = new ObjectOutputStream(requestSocket.getOutputStream());
@@ -196,7 +199,7 @@ public class ClientPanel extends javax.swing.JPanel {
         {
             ioException.printStackTrace();
         }
-        finally
+        /*finally
         {
             //4: Closing connection
             try
@@ -209,7 +212,7 @@ public class ClientPanel extends javax.swing.JPanel {
             {
                 ioException.printStackTrace();
             }
-        }
+        }*/
     }
     void sendMessage(String msg)
     {

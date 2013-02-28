@@ -28,8 +28,8 @@ public class MainMenu extends javax.swing.JPanel {
         initComponents();
         
         pegGui = new SolitaireGuiPanel();
-        client = new ClientPanel();
-        server = new ServerPanel();
+        
+        
         gameFrame = new JFrame("GUI2");
     }
 
@@ -215,6 +215,7 @@ public class MainMenu extends javax.swing.JPanel {
         textLabel.setPreferredSize(new Dimension(300,100));
         gameFrame.getContentPane().add(textLabel,BorderLayout.CENTER);
         
+        client = new ClientPanel();
         gameFrame.add((client));
         
         gameFrame.setLocationRelativeTo(null);
@@ -233,6 +234,7 @@ public class MainMenu extends javax.swing.JPanel {
         textLabel.setPreferredSize(new Dimension(300,100));
         gameFrame.getContentPane().add(textLabel,BorderLayout.CENTER);
         
+        server = new ServerPanel();
         gameFrame.add((server));
         
         gameFrame.setLocationRelativeTo(null);

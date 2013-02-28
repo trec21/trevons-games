@@ -154,8 +154,12 @@ public class ServerPanel extends javax.swing.JPanel {
         try
         {
             //1. creating a server socket
-            Scanner scan = new Scanner(System.in);
-            providerSocket = new ServerSocket(2004, 10);
+            //Scanner scan = new Scanner(System.in);
+            byte [] b = new byte[] {(byte)127,(byte)0,(byte)0,(byte)1};
+            InetAddress addr = null;
+            addr = InetAddress.getByAddress(b);
+
+            providerSocket = new ServerSocket(2004, 10, addr);
             //2. Wait for connection
             System.out.println("Waiting for connection");
             connection = providerSocket.accept();
@@ -192,7 +196,7 @@ public class ServerPanel extends javax.swing.JPanel {
         {
             ioException.printStackTrace();
         }
-        finally
+        /*finally
         {
             //4: Closing connection
             try
@@ -205,7 +209,7 @@ public class ServerPanel extends javax.swing.JPanel {
             {
                 ioException.printStackTrace();
             }
-        }
+        }*/
     }
     void sendMessage(String msg)
     {
