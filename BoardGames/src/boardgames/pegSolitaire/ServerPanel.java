@@ -155,11 +155,11 @@ public class ServerPanel extends javax.swing.JPanel {
         {
             //1. creating a server socket
             //Scanner scan = new Scanner(System.in);
-            byte [] b = new byte[] {(byte)127,(byte)0,(byte)0,(byte)1};
-            InetAddress addr = null;
-            addr = InetAddress.getByAddress(b);
+            //byte [] b = new byte[] {(byte)127,(byte)0,(byte)0,(byte)1};
+            //InetAddress addr = null;
+            //addr = InetAddress.getByAddress(b);
 
-            providerSocket = new ServerSocket(2004, 10, addr);
+            providerSocket = new ServerSocket(2004);
             //2. Wait for connection
             System.out.println("Waiting for connection");
             connection = providerSocket.accept();
