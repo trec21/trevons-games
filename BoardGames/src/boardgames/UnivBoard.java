@@ -37,11 +37,20 @@ public class UnivBoard
 	void empty()
         {
             for(int i=0;i<16;i++)
-	{
-        for(int i2=0;i2<16;i2++)
-		{
+            {
+                 for(int i2=0;i2<16;i2++)
+                    {
 			rows.elementAt(i).squares.elementAt(i2).setState('+');
-		}
-	}
+                    }
+            }
+        }
+        void changeSize(int row, int col)
+        {
+            rows.setSize(row);
+            for(int i=0;i<rows.size();i++)
+            {
+                rows.elementAt(i).squares.setSize(col);
+            }
+            
         }
 }
