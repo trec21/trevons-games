@@ -27,30 +27,9 @@ public class SolitaireMove
         String destination;
         String mid;
         
-        if(src.x>=0)
-        {
-            source = " " + src.toString();
-        }
-        else
-        {
-            source = src.toString();
-        }
-        if(dest.x>=0)
-        {
-            destination = " " + dest.toString();
-        }
-        else
-        {
-            destination = dest.toString();
-        }
-        if(middle.x>=0)
-        {
-            mid = " " + middle.toString();
-        }
-        else
-        {
-            mid = middle.toString();
-        }
+        source = Integer.toString(src.x+20) + Integer.toString(src.y+20);
+        destination = Integer.toString(dest.x+20) + Integer.toString(dest.y+20);
+        mid = Integer.toString(middle.x+20) + Integer.toString(middle.y+20);
         
         return source + destination + mid;
     }
