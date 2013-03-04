@@ -155,11 +155,11 @@ public class ServerPanel extends javax.swing.JPanel {
         {
             //1. creating a server socket
             //Scanner scan = new Scanner(System.in);
-            byte [] b = new byte[] {(byte)127,(byte)0,(byte)0,(byte)1};
-            InetAddress addr = null;
-            addr = InetAddress.getByAddress(b);
+            //byte [] b = new byte[] {(byte)127,(byte)0,(byte)0,(byte)1};
+            //InetAddress addr = null;
+            //addr = InetAddress.getByAddress(b);
 
-            providerSocket = new ServerSocket(2004, 10, addr);
+            providerSocket = new ServerSocket(2004);
             //2. Wait for connection
             System.out.println("Waiting for connection");
             connection = providerSocket.accept();
@@ -757,13 +757,23 @@ public class ServerPanel extends javax.swing.JPanel {
         //wait for your turn, continuously ask for msg from in till you get it
         try
         {
-            message = "";
-            while(message.equals(""))
+            System.out.println("Waiting for move");
+            message = "nothing";
+            while(message.equals("nothing"))
             {
+                System.out.println("Message still nothing");
                 message = (String)in.readObject();
+                System.out.println("Message now: "+message);
                 SolitaireMove otherPlayerMove = getMoveFromString(message);
                 b.make_move(otherPlayerMove);
+                
+                firstChoice = buts.get((-otherPlayerMove.src.y)+3).get((otherPlayerMove.src.x)+3);
+                middleButton = buts.get((-otherPlayerMove.middle.y)+3).get((otherPlayerMove.middle.x)+3);
+                JButton clicked = buts.get((-otherPlayerMove.dest.y)+3).get((otherPlayerMove.dest.x)+3);
+                apply_move_to_graphics(clicked);
+                myTurn = true;
             }
+            System.out.println(message);
         }
         catch(ClassNotFoundException classNot)
         {
@@ -777,12 +787,19 @@ public class ServerPanel extends javax.swing.JPanel {
     
     SolitaireMove getMoveFromString(String s)
     {
-        int srcx = Integer.parseInt(s.substring(0, 1));
-        int srcy = Integer.parseInt(s.substring(2, 3));
-        int destx = Integer.parseInt(s.substring(4, 5));
-        int desty = Integer.parseInt(s.substring(6, 7));
-        int midx = Integer.parseInt(s.substring(8, 9));
-        int midy = Integer.parseInt(s.substring(10, 11));
+        int srcx = Integer.parseInt(s.substring(0, 2));
+        int srcy = Integer.parseInt(s.substring(2, 4));
+        int destx = Integer.parseInt(s.substring(4, 6));
+        int desty = Integer.parseInt(s.substring(6, 8));
+        int midx = Integer.parseInt(s.substring(8, 10));
+        int midy = Integer.parseInt(s.substring(10, 12));
+        //handle negative numbers
+        srcx-=20;
+        srcy-=20;
+        destx-=20;
+        desty-=20;
+        midx-=20;
+        midy-=20;
         
         //break the string into the 3 coordinates
         SolitaireCoordinate src = new SolitaireCoordinate(srcx,srcy,true,true);
