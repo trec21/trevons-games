@@ -20,45 +20,58 @@ public class Ship {
     private String name;
     private point location;
     private String orientation;
+    private boolean sunk;
     int[] status;
     
     //error class just in case we magically hit a ship outside its size
     public class NotInShipException extends Exception{
+       String out;
         public NotInShipException(String ship){
-            System.out.println(ship + " has registered a hit outside the bounds of the ship.");
-        }
+            out = (ship + " has registered a hit outside the bounds of the ship.");
+         }   
+            public String what(){return out;}
+        
     };
     
-    public class point{
+    static class point{
         int x, y;
         
         public point(int xCoord, int yCoord){
             x=xCoord;
             y=yCoord;
         }
+        
+        int getX(){return x;}
+        
+        int getY(){return y;}
     }
     
     public Ship(){
         size = 3;
         name = "Ship";
         status=new int[size];
+        sunk=false;
     }
     
     public Ship(int s){
         size = s;
         name = "Ship";
         status=new int[size];
+        sunk=false;
     }
     
     public Ship(int s, String n){
         size = s;
         name = n;
         status=new int[size];
+        sunk=false;
     }
     
     public int size(){ return size;}
     
     public String name(){return name;}
+    
+    public point point(){return location;}
     
     public void placeShip(point p, String orient){
         location=p;
@@ -71,10 +84,19 @@ public class Ship {
     
     public String getOrientation(){ return orientation;}
     
-    public void damage(int location) throws NotInShipException{
+    public boolean sunk(){return sunk;}
+    
+    public String damage(int location) throws NotInShipException{
         if(location < size){
             status[location] = 1;
         }
         else{ throw new NotInShipException(name);} //if we get a locaton outside of the ship's size, throw error
+        
+        for(int i=0; i<size;i++){
+                if(status[i]!=1){ return "Damaged " + name;}
+        }
+        sunk=true;
+        return "Destroyed " + name;
+        
     }
 }
