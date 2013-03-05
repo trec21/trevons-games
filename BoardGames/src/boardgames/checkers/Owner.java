@@ -15,5 +15,10 @@ public enum Owner {
     PLAYER1, PLAYER2, EMPTY;   
         
     public ArrayList<CheckersCell> pieces;
+    
+    Owner()
+    {
+        pieces = new ArrayList();
+    }
    
 }

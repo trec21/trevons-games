@@ -16,8 +16,8 @@ public class CheckersBoard {
      * The bottom right cell is always light and pieces live on dark squares.
      * The indexing starts at the top and Player1 is at the bottom. 
      */
-    public Integer BOARDSIZE = 8;
-    ArrayList< ArrayList<CheckersCell> > board = new ArrayList<>();
+    public static int BOARDSIZE = 8;
+    public static ArrayList< ArrayList<CheckersCell> > board = new ArrayList<>();
     
     
     public CheckersBoard()
@@ -28,7 +28,7 @@ public class CheckersBoard {
             ArrayList<CheckersCell> currentRow = new ArrayList<>();
             for(int j =0; j< BOARDSIZE; j++) 
             {
-                currentRow.add(new CheckersCell(Owner.EMPTY,i,j));
+                currentRow.add(new CheckersCell(Owner.EMPTY,j,i));
             }
             
             board.add(currentRow);
@@ -84,6 +84,11 @@ public class CheckersBoard {
             }
         }
         
+        printBoard();
+    }
+    
+    public void printBoard()
+    {
         for(ArrayList<CheckersCell> row: board)
         {
             for(CheckersCell cell: row)
@@ -92,13 +97,65 @@ public class CheckersBoard {
             }
             System.out.print("\n");
         }
+        System.out.println("\n");
     }
     
+    public boolean jump(CheckersMove move)
+    {
+        CheckersCell s = board.get(move.source.y).get(move.source.x);
+        CheckersCell m = board.get(move.middle.y).get(move.middle.x);
+        CheckersCell d = board.get(move.dest.y).get(move.dest.x);
+        
+        Owner opp = s.getOwner();
+        s.setOwner(Owner.EMPTY);
+        m.setOwner(Owner.EMPTY);
+        d.setOwner(opp);
+        
+        return false;
+    }
+    
+    public boolean makeMove(CheckersMove m)
+    {
+        if(CheckersCell.isValidMove(m))
+        {
+            int xDest = m.dest.x;
+            int yDest = m.dest.y;
+            CheckersCell d = board.get(yDest).get(xDest);
+            
+            Owner o = m.source.getOwner();
+            m.source.setOwner(Owner.EMPTY);
+            d.setOwner(o);
+            o.pieces.remove(m.source);
+            o.pieces.add(d);
+            
+            System.out.println("Move: " + m.toString());
+            printBoard();
+            return true;
+        }
+        
+        System.out.println("Invalid Move: " + m.toString());
+        return false;
+    }
     
     
     public boolean makeMove(CheckersCell source, CheckersCell dest)
     {
-        return true;
+        
+        CheckersMove m = new CheckersMove(source, dest);
+        if(CheckersCell.isValidMove(m))
+        {
+            Owner o = source.getOwner();
+            source.setOwner(Owner.EMPTY);
+            dest.setOwner(o);
+            o.pieces.remove(m.source);
+            o.pieces.add(dest);
+            
+            System.out.println("Move: " + m.toString());
+            printBoard();
+            return true;
+        }
+        System.out.println("Invalid Move: " + m.toString());
+        return false;
     }
     
     public boolean jump(CheckersCell source, CheckersCell dest)
@@ -106,9 +163,26 @@ public class CheckersBoard {
         return true;
     }
     
-    /*public static void main(String[] args) 
+    public static void main(String[] args) 
     {
          System.out.println("Start");
          CheckersBoard b = new CheckersBoard();
-    }*/
+         CheckersCell src = b.board.get(2).get(1);
+         CheckersCell dest = b.board.get(3).get(0);
+         b.makeMove(src, dest);
+         
+         src = b.board.get(3).get(0);
+         ArrayList<CheckersMove> moves = src.getMoves();
+         b.makeMove(moves.get(0));
+         
+         //System.out.println(x);
+         b.printBoard();
+         
+         src = b.board.get(5).get(0);
+         ArrayList<CheckersMove> j = src.getJumps();
+         b.jump(j.get(0));
+         
+         b.printBoard();
+         
+    }
 }
