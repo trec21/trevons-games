@@ -37,7 +37,7 @@ public class MancalaBoard {
             int i=r+1;
             int j = c;
             while(board[c][r].size() > 0) {
-                if(i>)
+                //if(i>)
                 moveOnePiece(c,r,i,j);
             }
         }
