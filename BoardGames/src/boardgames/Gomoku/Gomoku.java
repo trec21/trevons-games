@@ -17,6 +17,11 @@ public class Gomoku
     
     public void initGomoku()
     {
+        
+        //initSetup()
+            //pvp or ai
+            //AI ONLY: choose color
+        
         do
         { 
             ++turnCounter;
@@ -24,30 +29,48 @@ public class Gomoku
             int row=0;
             int col=0;
             char clr='+'; //to relay which color is playing currently
+                                //default '+' implies blank
             
             //needs to check for option buttons
                  //ie: undo, restart, quit
+            
+            if(turnCounter % 2 != 0)
+            {
+                clr = 'b'; //black always goes first, affirmative action ;)
+            }
+            else {clr = 'w';}
         
             //getMove()
+                //take in user (or AI) input
                 //push values to row, col
-            
-            //checkMove()
-            //alters value of wrongMove to true if condtions met
-        
-            if(!wrongMove)
+                
+            do
             {
-                //UBoard.play(row,col);
-                    //recentX.addElement(col); //col value determines x location
-                    //recentY.addElement(row); // row value determines y location
+                wrongMove = checkMove(row,col,clr);
+            } while (wrongMove);
+            
+            UBoard.play(row,col,clr);
+                    recentX.add(col); //col value determines x location
+                    recentY.add(row); // row value determines y location
                 
                 gameOver = checkWin(row,col,clr);
-            }
+            
         } while (!gameOver);
            
     }
     
-    boolean checkWin(int row, int col, char clr)
+    boolean checkMove(int row, int col, char clr)
     {
+         if(UBoard.getSquareState(row, col) == '+')
+         {
+             return false; //returns false to wrongMove, implies valid move
+         }
+         else {return true;} //implies invalid move
+    }
+   
+    boolean checkWin(int row, int col, char clr)
+    {//taken from old project, may need to refactor
+        
         int tempR,tempC;
 	int currRow = row;
 	int currCol = col;
@@ -229,11 +252,11 @@ public class Gomoku
         }
     }
     
-    void quit()
+    void restart()
     {
         UBoard.empty();
-        
-        //exit to main menu, close Gomoku GUI screen
+        turnCounter = 1;
+            //needs to be set to 1; checked for after turnCounter increment
     }
     
     
