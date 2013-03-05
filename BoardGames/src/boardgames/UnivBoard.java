@@ -20,21 +20,21 @@ public class UnivBoard
 		rows.setSize(16);
 	}
 
-	void play(int row, int col, char s)
+	public void play(int row, int col, char s)
         {
             rows.elementAt(row).squares.elementAt(col).setState(s);
         }
         
-	void unplay (int row, int col)
+	public void unplay (int row, int col)
         {
             play(row,col,'+');
                 //replaces location with empty state
         }
-	char getSquareState(int row, int col)
+	public char getSquareState(int row, int col)
         {
             return rows.elementAt(row).squares.elementAt(col).getState();
         }
-	void empty()
+	public void empty()
         {
             for(int i=0;i<16;i++)
             {
@@ -44,7 +44,7 @@ public class UnivBoard
                     }
             }
         }
-        void changeSize(int row, int col)
+        public void changeSize(int row, int col)
         {
             rows.setSize(row);
             for(int i=0;i<rows.size();i++)
