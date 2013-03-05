@@ -6,6 +6,7 @@ package boardgames;
 import boardgames.pegSolitaire.*;
 import boardgames.Gomoku.*;
 import boardgames.BattleShip.*;
+import boardgames.checkers.*;
 
 import java.awt.*;
 import javax.swing.*;
@@ -193,6 +194,8 @@ public class MainMenu extends javax.swing.JPanel {
 
     private void CheckersClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckersClicked
         // TODO add your handling code here:
+        CheckersGame g = new CheckersGame();
+        g.initCheckers();
     }//GEN-LAST:event_CheckersClicked
 
     private void GomokuClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GomokuClicked
