@@ -4,13 +4,16 @@
  */
 package boardgames.checkers;
 
-import java.util.*;
+import java.util.ArrayList;
+
 /**
  *
  * @author Trevon
  */
-public class CheckersGame {
-    
-
-    
+public enum Owner {
+ 
+    PLAYER1, PLAYER2, EMPTY;   
+        
+    public ArrayList<CheckersCell> pieces;
+   
 }
