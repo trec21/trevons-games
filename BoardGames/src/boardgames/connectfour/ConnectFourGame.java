@@ -16,6 +16,7 @@ public class ConnectFourGame {
     int playerColor = 1, opponentColor =2;
     int colOne, colTwo, colThr, colFor, colFiv, colSix, colSev;
     ConnectFourBoard b;
+    boolean moveComplete = false, gameOver = false;
     
     public void cfGameStart() {
         b = new ConnectFourBoard();
@@ -29,13 +30,34 @@ public class ConnectFourGame {
         b.printBoard();
         
         int turn = 1;
-        
-        while(true) {
+        int winner = 0;
+        while(!gameOver) {
             
             move(turn);
             
             b.printBoard();
-            turn++;
+            
+            if (moveComplete){
+                turn++;
+            }
+            
+            winner = b.win();
+            
+            System.out.println("Winner value is " + winner);
+            
+            if(winner==1) {
+                System.out.println("Game Over! Black won!");
+                gameOver = true;
+            }
+            if(winner==2) {
+                System.out.println("Game over! Red won!");
+                gameOver = true;
+            }
+            
+            if(colOne == 6 && colTwo == 6 && colThr == 6 && colFor == 6 && colFiv == 6 && colSix == 6 && colSev == 6) {
+                System.out.println("Game over! No moves left! It's a tie!");
+                gameOver = true;
+            }
         }
     }
     
@@ -43,7 +65,10 @@ public class ConnectFourGame {
     public void move(int turn) {
         int colMove;
         int turnColor;
+        
         String currentPlayer = "@";
+        
+        moveComplete = false;
         
         if((turn%2) == 0){
             turnColor=opponentColor;
@@ -72,6 +97,7 @@ public class ConnectFourGame {
                 } else {
                     b.setPiece(colOne, colMove-1, turnColor);
                     colOne++;
+                    moveComplete = true;
                 }
                 break;
             case 2:
@@ -80,6 +106,7 @@ public class ConnectFourGame {
                 } else {
                     b.setPiece(colTwo, colMove-1, turnColor);
                     colTwo++;
+                    moveComplete = true;
                 }
                 break;
             case 3:
@@ -88,6 +115,7 @@ public class ConnectFourGame {
                 } else {
                     b.setPiece(colThr, colMove-1, turnColor);
                     colThr++;
+                    moveComplete = true;
                 }
                 break;
             case 4:
@@ -96,6 +124,7 @@ public class ConnectFourGame {
                 } else {
                     b.setPiece(colFor, colMove-1, turnColor);
                     colFor++;
+                    moveComplete = true;
                 }
                 break;
             case 5:
@@ -104,6 +133,7 @@ public class ConnectFourGame {
                 } else {
                     b.setPiece(colFiv, colMove-1, turnColor);
                     colFiv++;
+                    moveComplete = true;
                 }
                 break;
             case 6:
@@ -112,6 +142,7 @@ public class ConnectFourGame {
                 } else {
                     b.setPiece(colSix, colMove-1, turnColor);
                     colSix++;
+                    moveComplete = true;
                 }
                 break;
             case 7:
@@ -120,9 +151,11 @@ public class ConnectFourGame {
                 } else {
                     b.setPiece(colSev, colMove-1, turnColor);
                     colSev++;
+                    moveComplete = true;
                 }
                 break;
         }
+        
         
     }
     

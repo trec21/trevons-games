@@ -37,19 +37,12 @@ public class ConnectFourBoard {
     
     public int win() {
         
-        // 
-        // Change the checks from == to .pieceColor().equals(...)
-        // and make sure the empty pieces don't throw the winner setting
-        //
-         
-        
-        boolean redWon = false, blackWon = false;
         int winner = 0;
         // Check horizontals
         for(int row =0; row<=numRow; row++){
             for(int col= 0; col<=numColumn; col++) {
                 
-                if(board.get(row).get(col).pieceColor() > 0 && board.get(row).get(col).equals(board.get(row).get(col+1)) && board.get(row).get(col).equals(board.get(row).get(col+2)) && board.get(row).get(col).equals(board.get(row).get(col+3))){
+                if(board.get(row).get(col).pieceColor() > 0 && board.get(row).get(col).pieceColor()==board.get(row).get(col+1).pieceColor() && board.get(row).get(col).pieceColor() == board.get(row).get(col+2).pieceColor() && board.get(row).get(col).pieceColor() == board.get(row).get(col+3).pieceColor()){
                     winner = board.get(row).get(col).pieceColor();
                 }
             }
@@ -58,7 +51,7 @@ public class ConnectFourBoard {
         // Check verticals
         for(int col =0; col<=numColumn; col++){
             for(int row= 0; row<=numRow; row++) {
-                if(board.get(row).get(col).pieceColor() > 0 && board.get(row).get(col).equals(board.get(row+1).get(col)) && board.get(row).get(col).equals(board.get(row+2).get(col)) && board.get(row).get(col).equals(board.get(row+3).get(col))){
+                if(board.get(row).get(col).pieceColor() > 0 && board.get(row).get(col).pieceColor()==board.get(row+1).get(col).pieceColor() && board.get(row).get(col).pieceColor() == board.get(row+2).get(col).pieceColor() && board.get(row).get(col).pieceColor() == board.get(row+3).get(col).pieceColor()){
                     winner = board.get(row).get(col).pieceColor();
                 }
             }
@@ -67,7 +60,7 @@ public class ConnectFourBoard {
         // Check positive diagonal
         for(int row=0; row<=numRow-3; row++) {
             for(int col=0; col<=numColumn-3; col++){
-                if(board.get(row).get(col).pieceColor() > 0 && board.get(row).get(col).equals(board.get(row+1).get(col+1)) && board.get(row).get(col).equals(board.get(row+2).get(col+2)) && board.get(row).get(col).equals(board.get(row+3).get(col+3))){
+                if(board.get(row).get(col).pieceColor() > 0 && board.get(row).get(col).pieceColor()==board.get(row+1).get(col+1).pieceColor() && board.get(row).get(col).pieceColor() == board.get(row+2).get(col+2).pieceColor() && board.get(row).get(col).pieceColor() == board.get(row+3).get(col+3).pieceColor()){
                     winner = board.get(row).get(col).pieceColor();
                 }
             }
@@ -76,29 +69,13 @@ public class ConnectFourBoard {
         // Check negative diagonal
         for(int row=numRow-1; row>=3; row--) {
             for(int col=0; col<=numColumn-3; col++) {
-                if(board.get(row).get(col).pieceColor() > 0 && board.get(row).get(col).equals(board.get(row-1).get(col+1)) && board.get(row).get(col).equals(board.get(row-2).get(col+2)) && board.get(row).get(col).equals(board.get(row-3).get(col+3))){
+                if(board.get(row).get(col).pieceColor() > 0 && board.get(row).get(col).pieceColor()==board.get(row-1).get(col+1).pieceColor() && board.get(row).get(col).pieceColor() == board.get(row-2).get(col+2).pieceColor() && board.get(row).get(col).pieceColor() == board.get(row-3).get(col+3).pieceColor()){
                     winner = board.get(row).get(col).pieceColor();
                 }
             }
         }
         
-        //Black wins
-        if (winner == 1) {
-            blackWon = true;
-        }
-        //Red wins
-        if (winner == 2) {
-            redWon = true;
-        }
-     
-        if (redWon) {
-            return 2;
-        }
-        if (blackWon) {
-            return 1;
-        }
-        
-        return 0;
+        return winner;
     }
 
     void printBoard() {
