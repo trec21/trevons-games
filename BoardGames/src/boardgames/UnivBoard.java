@@ -20,28 +20,37 @@ public class UnivBoard
 		rows.setSize(16);
 	}
 
-	void play(int row, int col, char s)
+	public void play(int row, int col, char s)
         {
             rows.elementAt(row).squares.elementAt(col).setState(s);
         }
         
-	void unplay (int row, int col)
+	public void unplay (int row, int col)
         {
             play(row,col,'+');
                 //replaces location with empty state
         }
-	char getSquareState(int row, int col)
+	public char getSquareState(int row, int col)
         {
             return rows.elementAt(row).squares.elementAt(col).getState();
         }
-	void empty()
+	public void empty()
         {
             for(int i=0;i<16;i++)
-	{
-        for(int i2=0;i2<16;i2++)
-		{
+            {
+                 for(int i2=0;i2<16;i2++)
+                    {
 			rows.elementAt(i).squares.elementAt(i2).setState('+');
-		}
-	}
+                    }
+            }
+        }
+        public void changeSize(int row, int col)
+        {
+            rows.setSize(row);
+            for(int i=0;i<rows.size();i++)
+            {
+                rows.elementAt(i).squares.setSize(col);
+            }
+            
         }
 }

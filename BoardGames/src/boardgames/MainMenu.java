@@ -205,6 +205,8 @@ public class MainMenu extends javax.swing.JPanel {
 
     private void BattleshipClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BattleshipClicked
         // TODO add your handling code here:
+        BattleShipGUI b = new BattleShipGUI();
+        b.playGame();
     }//GEN-LAST:event_BattleshipClicked
 
     private void clientClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientClicked
