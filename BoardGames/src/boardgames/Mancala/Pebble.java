@@ -8,14 +8,14 @@ import java.util.*;
 
 /**
  *
- * @author Kaitlin
+ * @author Admin
  */
 public class Pebble {
     private int owner;
     
     Pebble() {
         owner = 0;
-    }
+}
     Pebble(int o) {
         owner = o;
     }
