@@ -6,6 +6,7 @@ package boardgames;
 import boardgames.pegSolitaire.*;
 import boardgames.Gomoku.*;
 import boardgames.BattleShip.*;
+import boardgames.connectfour.*;
 
 import java.awt.*;
 import javax.swing.*;
@@ -189,6 +190,8 @@ public class MainMenu extends javax.swing.JPanel {
 
     private void ConnectFourClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectFourClicked
         // TODO add your handling code here:
+        ConnectFourGame g = new ConnectFourGame();
+        g.cfGameStart();
     }//GEN-LAST:event_ConnectFourClicked
 
     private void CheckersClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckersClicked
