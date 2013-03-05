@@ -89,11 +89,18 @@ public class CheckersBoard {
     
     public void printBoard()
     {
+        System.out.print("  ");
+        for(int i=0;i<BOARDSIZE;i++)
+        {
+            System.out.print(i + " ");
+        }
+        System.out.print("\n");
         for(ArrayList<CheckersCell> row: board)
         {
+            System.out.print(board.indexOf(row) + " ");
             for(CheckersCell cell: row)
             {
-                System.out.print(cell.toString());
+                System.out.print(cell.toString() + " ");
             }
             System.out.print("\n");
         }
@@ -163,7 +170,7 @@ public class CheckersBoard {
         return true;
     }
     
-    public static void main(String[] args) 
+   /* public static void main(String[] args) 
     {
          System.out.println("Start");
          CheckersBoard b = new CheckersBoard();
@@ -184,5 +191,5 @@ public class CheckersBoard {
          
          b.printBoard();
          
-    }
+    }*/
 }

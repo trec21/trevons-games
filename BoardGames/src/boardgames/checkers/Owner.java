@@ -21,4 +21,20 @@ public enum Owner {
         pieces = new ArrayList();
     }
    
+    @Override
+    public String toString()
+    {
+        if(this==PLAYER1)
+        {
+            return "PLAYER1 - BLACK";
+        }
+        else if(this==PLAYER2)
+        {
+            return "PLAYER2 - RED";
+        }
+        else
+        {
+            return "";
+        }
+    }
 }

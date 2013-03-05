@@ -167,7 +167,22 @@ public class CheckersCell {
 
     public static boolean isValidMove(CheckersMove m) {
         boolean isValid = true;
-
+        
+        if(m.dest.x > m.source.x + 2)
+        {
+            isValid = false;
+        }
+        
+        if(m.dest.x < m.source.x - 2)
+        {
+            isValid = false;
+        }
+        
+        if(m.dest.y == m.source.y)
+        {
+            isValid = false;
+        }
+        
         if (m.source.owner == Owner.EMPTY) {
             isValid = false;
         }
